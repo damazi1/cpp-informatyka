@@ -18,6 +18,5 @@ while(i<n){
 i++;
 }
 cout << l;
-JD
 return 0;
 }
