@@ -1,0 +1,47 @@
+x jest zmienną typu całkowitego o długości 1 słowa = int x;
+y jest zmienną typu znakowego = char y;
+y jest zmienną całkowitą o długości 1 baita = char y;
+z jest zmienną bez znaku, której wartości nie można zmienić z zainiciowaną wartością 5 = z, unsigned,const, int = 5; czyli const unsigned int z = 5;
+v jest zmienną typu o długo ści jednego bajta = char v
+
+a jest wskaźnikiem do obiektu typu całkowitego a,*,int,; = int* a;
+
+typ <-*-> nazwa - dwuargumentowy
+      *-> jednoargumentowy operator 
+nazwa/wartość<-*->nazwa/wartość 
+
+c jest wskaźnikiem do wskaźnika do obiektów typu całkowitego c,*,*,int; = int**c;
+d jest 5 elementową tablicą obiektów typu całkowitego d,5,[],int,; = int d[5];
+f jest 2 elementowa tablica tablic 4 elementowych obiektów typu całkowitego f,2,[],[],4,short int,; = short int f[2][4]
+f jest tablicą wskaźników do obiektów typu całkowitego zainiciowaną 3 elementami a,b,c  f,[],*,int,= ,a,b,c,{,},; = int * f[]={a,b,c};  int(*e)[];
+a jest wskaźnikiem do stałych obiektów zmiennoprzecinkowych pojedyńczej precyzji a,*,const ,float,; = const float * a; 
+b jest stałym wskaźnikiem do stałych obiektów zmiennoprzecinkowego pojedyńczej precyzji zainiciowanym adresem obiektu a     b,const ,* , const ,float, = , &,a,;  const float const * b=&a;
+
+typ<-&-> nazwa/ operator = dwuargumentowy operator typu
+&-> jedno argumentowy operator adresu (alias)
+nazwa/wartość <-&-> nazwa /wartość = dwuargumentowy operator łączenia bitowego
+nazwa/wartość/WYRAŻENIE<-&&-> nazwa / wartość / WYRAŻENIE= operator łączenia logicznego 
+
+int *d; 
+
+b jest referencją do satłego wskaźnika do obiektów typu całkowitego zainicjowaną obiektem d  b,&,const,*,int,=,d,; int * const & b=d;
+
+wartość zwracana    fun(argumenty){
+        ^                   ^
+    funkcja zwraca      funkcja przyjmuje
+}
+
+int fun(); - deklaracja funkcji
+int fun(int); 
+int fun (int,int); // funkcja przyjuję wartość typu całkowitego i zwraca wartość typu całkowitego
+
+a jest bezargumentową funkcjią zwracającą wartość zmienno przecinkową podwójniej precyzji a,(),double,; double a();
+void a(); // funkcja nic nie przyjumję i nic nie zwraca.
+
+b jest wskaźnikiem do bezargumentowej funkcji zwracającej wartośc typu zmiennoprzecinkowego podwójnej precyzji b,*,(),double,; double (*b)();
+
+c jest wskaźnikiem do funkcji przyjmującej jako argument tablice 3 wskaźników do obiektów typu całkowitego a zwracającej wartość typu zmiennoprzecinkowego podwójnej precyzji  c,*,(),[],3,*,double,; double (*c)(int*[3]);
+
+double (*e[4])(); e jest tablicą 4 elementową 
+
+f jest wskaźnikiem do funkcji przyjmującej jako argument obiekt typu całkowitego a zwracającej wskaźnik do bezargumentowej funkcji która zwraca wartość typu zmiennoprzecinkowego podwójnej precyzji  f,*(),int,*,(),double,;   double *(int (*f))();
