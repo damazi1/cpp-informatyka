@@ -4,15 +4,11 @@
 #include<cmath>
 
 using namespace std;
-void sito(int *t,const int n){
-    int info;
-    for(int i=0;i<n;i++){
-        for(int j=n;j>0;j--){
-            if(j%i==0){
-                info++;
-                if (info>1){
-                    end
-                }
+void sito(bool *t,const int n){
+    for(int i=2;i*i<=n;i++){
+        if(!t[i]){
+            for(int j=i*i;j<=n;j+=i){
+                t[j]=1;
             }
         }
     }
@@ -22,10 +18,19 @@ int main(){
     int n;
     cout<<"podaj liczbe n: ";
     cin>>n;
-    int*t=new int [n];
+    bool*t=new bool [n+1];
+    for(int i=2;i<=n;i++){
+        t[i]=0;
+    }
+    sito(t,n);
+    for(int i=2;i<=n;i++){
+        if(!t[i]){
+            cout<<i<<" ";
+        }
+    }
     if(t){
         delete [] t;
         t=0;
     }
-
+    return 0;
 }
