@@ -9,7 +9,7 @@ void fib(int*tab,const int n){
     }
 }
 int main(){
-    const int n=7;
+    const int n=1;
     int tab[n];
     fib(tab,n);
     for (int i=0;i<n;i++){
