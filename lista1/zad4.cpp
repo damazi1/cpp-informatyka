@@ -26,9 +26,41 @@ int srednia(int *t,const int n){
   }
   return sr/ile;
 }
-int srednia_parz(int*t,const int n){
+float srednia_parz(int*t,const int n){
   int sr=0;
   int ile=0;
   for (int i=0;i<n;i++){
     if(t[i]%2==0){
-      
+     sr+=t[i];
+     ile++; 
+    }
+  }
+  return sr/ile;
+}
+  float srednia_podz(int*t,const int n){
+    int sr=0;
+    int ile=0;
+    for (int i=0;i<n;i++){
+      if (t[i]%3==0){
+        sr+=t[i];
+        ile++;
+      }
+    }
+    return sr/ile;
+  }
+ 
+ int main(){
+  int n;
+  cin>>n;
+  int*t=new int [n];
+  wypelnij(t,n);
+  wypisz(t,n);
+  cout<<"srednia liczb parzystych: "<<srednia_parz(t,n)<<endl<<" Srednia liczb podzielnych przez 3 to: "<<srednia_podz(t,n)<<endl;
+  if(t){
+    delete[]t;
+    t=0;
+  }
+
+  return 0;
+
+ }
