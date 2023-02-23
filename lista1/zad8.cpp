@@ -5,11 +5,11 @@
 
 using namespace std;
 
-void pobierz(int a,int b,int c){
+void pobierz(int &a,int &b,int &c){
     cout<<"podaj 3 liczby:";
     cin>>a>>b>>c;
 }
-bool sprawdz(int a,int b,int c){
+int sprawdz(int a,int b,int c){
     if(a+b>c){
         return 1;
     }
@@ -34,12 +34,12 @@ float pole(int a,int b,int c){
         return 0;
     }
 }
-float poleharona(int a,int b, int c){
-    float poleharona;
+float poleherona(int a,int b, int c){
+    float poleherona;
     if (sprawdz(a,b,c)==1)
     {
-        // poleharona=sqrt((pole(a,b,c)(pole(a,b,c)-a)(pole(a,b,c)-b)(pole(a,b,c)-c)));
-        return poleharona;
+        poleherona=sqrt(pole(a,b,c)*(pole(a,b,c)-a)*(pole(a,b,c)-b)*(pole(a,b,c)-c));
+        return poleherona;
     }
     else{
         return 0;
@@ -49,5 +49,6 @@ int main(){
     int a,b,c;
     pobierz(a,b,c);
     cout<<"twoja liczba jest: "<<sprawdz(a,b,c);
+    cout<<"pole: "<<pole(a,b,c)<<" \n pole herona: "<<poleherona(a,b,c)<<endl;
   return 0;
 }
