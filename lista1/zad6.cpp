@@ -35,7 +35,7 @@ int main(){
   cout<<"podaj n: ";
   cin>>n;
   int liczba;
-  cout<<endl<<"podaj liczbę: ";
+  cout<<endl<<"podaj liczbę do zamiany: ";
   cin>>liczba;
   int*t=new int [n];
   wypelnij(t,n);

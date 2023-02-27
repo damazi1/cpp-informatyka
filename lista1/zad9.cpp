@@ -22,6 +22,7 @@ double x1,x2;
 }
 int main(){
     double a,b,c;
+    cout<<"Podaj zmienne a,b,c: ";
     cin>>a>>b>>c;
     viete(a,b,c);
        return 0;
