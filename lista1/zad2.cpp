@@ -36,6 +36,7 @@ int pozycja(const int* tab,const int n){
 }
 int main(){
   srand(time(NULL));
+  cout<< "Podaj wielkość tablicy ";
   int n;
   cin >>n;
   cout<<endl;

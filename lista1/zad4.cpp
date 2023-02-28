@@ -51,6 +51,7 @@ float srednia_parz(int*t,const int n){
  
  int main(){
   int n;
+  cout<<"podaj wielkosc tablicy: ";
   cin>>n;
   int*t=new int [n];
   wypelnij(t,n);

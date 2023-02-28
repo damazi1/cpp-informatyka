@@ -35,6 +35,7 @@ int liczba_fib(int *t,const int n){
 }
 int main(){
   int n;
+  cout<<"podaj wielkosc tablicy: ";
   cin>>n;
   int*t=new int [n];
   wypelnij(t,n);
