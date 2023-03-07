@@ -82,25 +82,37 @@ void tabliczka_mnozenia(){
     int tab[99];
     for(int i=1;i<=10;i++){
         for(int j=1;j<=10;j++){
-            tab[1]
+            cout<<i*j<<"\t";
         }
+        cout<<"\n";
+    }
+    int a,b;
+    cout<<"Podaj 2 liczby z zakresu od <1,10>:  ";
+    cin>>a>>b;
+    if (a>1|a<10|b>1|b<10){
+        cout<<"Odpowiedź to: "<<a*b;
+    }
+    else{
+        cout<<"liczby nie są z zakresu 1-10";
+        return;
     }
 }
 
 int main(){
     srand(time(NULL));
+    cout<<"podaj wielkośc tablicy: ";
     unsigned int n;
     cin>>n;
     int *t;
-    // utworz(t,n);
-    // cout<<"\n";
-    // cout << endl<<t<<endl;
-    // wypelnij(t,n);
-    // wypisz(t,n);
-    // usuwanie(t,n);
-    // wypisz(t,n);
-    // dodaj(t,n);
-    // wypisz(t,n);
+    utworz(t,n);
+    cout<<"\n";
+    cout << endl<<t<<endl;
+    wypelnij(t,n);
+    wypisz(t,n);
+    usuwanie(t,n);
+    wypisz(t,n);
+    dodaj(t,n);
+    wypisz(t,n);
 
     int *t1,*t2,*t3;    
     utworz(t1,n);
@@ -108,11 +120,12 @@ int main(){
     utworz(t2,n);
     wypelnij(t2,n);
     utworz(t3,n);
-    // cout<<suma(t1,t2,n)<<endl;
-    // suma(t1,t2,t3,n);
-    // wypisz(t3,n);
+    cout<<suma(t1,t2,n)<<endl;
+    suma(t1,t2,t3,n);
+    wypisz(t3,n);
     suma1(t1,t2,t3,n);
     wypisz(t3,n);
+    tabliczka_mnozenia();
     if(t){
         delete[]t;
         t=0;
