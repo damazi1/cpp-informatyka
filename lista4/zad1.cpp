@@ -93,6 +93,7 @@ int main(int argc,char *argv[]){
     }
     char*a=wstaw(argv[1],argv[2][0]);
     cout<<a<<endl;
+    usun(a);
     size_t dlugosc=strlen(argv[1])+strlen(argv[1])/3+2;
     char *b=new char[dlugosc];
     char *c=nullptr;
