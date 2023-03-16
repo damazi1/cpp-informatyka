@@ -10,15 +10,11 @@ using namespace std;
 bool palindrom(const char*src){
     size_t n=strlen(src);
     size_t i=0,j=n-1;
-    // for(;i<n;i++){
-    //     if(src[i]=='?'||'.'||','||'-'||'!'||'('||')'){
-            
-    // }
     for (;i<j;i++,j--){
-        if(src[i]==' '||'?'||'.'||','||'-'||'!'||'('||')'){
+        while(src[i]==' '||'?'||'!'){
             i++;
         }
-        if(src[j]==' '||'?'||'.'||','||'-'||'!'||'('||')'){
+        while(src[j]==' '||'?'){ //||'.'||','||'-'||'!'||'('||')'
             j--;
         }
         if(src[i]!=src[j]){
@@ -30,6 +26,6 @@ bool palindrom(const char*src){
 }
 
 int main(int argc,char*argv[]){
-    cout<<"\n"<<palindrom("a!?la ala")<<endl;
+    cout<<"\n"<<palindrom(argv[1])<<endl;
     return 0;
 }
