@@ -11,12 +11,16 @@ bool palindrom(const char*src){
     size_t n=strlen(src);
     size_t i=0,j=n-1;
     for (;i<j;i++,j--){
-        while(src[i]==' '||'?'||'!'){
-            i++;
-        }
-        while(src[j]==' '||'?'){ //||'.'||','||'-'||'!'||'('||')'
-            j--;
-        }
+        while(src[i]==' ')i++;
+        while(src[j]==' ')j--;
+        while(src[i]=='?')i++;
+        while(src[j]=='?')j--;
+        while(src[i]=='!')i++;
+        while(src[j]=='!')j--;
+        while(src[i]=='.')i++;
+        while(src[j]=='.')j--;
+        while(src[i]==',')i++;
+        while(src[j]==',')j--;        
         if(src[i]!=src[j]){
             return false;
     }
