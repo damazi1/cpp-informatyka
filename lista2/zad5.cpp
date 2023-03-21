@@ -98,6 +98,13 @@ void tabliczka_mnozenia(){
     }
 }
 
+void usun(int *tab){
+    if(tab){
+        delete []tab;
+        tab=0;
+    }
+}
+
 int main(){
     srand(time(NULL));
     cout<<"podaj wielkośc tablicy: ";
@@ -126,17 +133,8 @@ int main(){
     suma1(t1,t2,t3,n);
     wypisz(t3,n);
     tabliczka_mnozenia();
-    if(t){
-        delete[]t;
-        t=0;
-    }
-    if(t1){
-        delete[]t;
-        t=0;
-    }
-    if(t2){
-        delete[]t;
-        t=0;
-    }
-    return 0;
+    usun(t);
+    usun(t1);
+    usun(t2);
+    usun(t3);
 }

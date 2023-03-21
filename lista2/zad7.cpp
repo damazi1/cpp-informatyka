@@ -27,7 +27,7 @@ float wartosc_wyrazenia(int x){
     return (10*(szescian(x))+3.1415*(kwadrat(x)))*((x/3)-(1/kwadrat(x)));
 }
 float obwod(float a,float b,float c){
-    if(a+b>c|a+c>b|b+c>a){
+    if(a+b>c||a+c>b||b+c>a){
         return a+b+c;
     }
     else{
@@ -37,7 +37,7 @@ float obwod(float a,float b,float c){
 }
 float pole(float a,float b,float c){
     float polea;
-    if(a+b>c|a+c>b|b+c>a){
+    if(a+b>c||a+c>b||b+c>a){
         polea=obwod(a,b,c)/2;
         return polea;
     }
@@ -47,7 +47,7 @@ float pole(float a,float b,float c){
 }
 float poleherona(float a,float b, float c){
     float poleherona;
-    if(a+b>c|a+c>b|b+c>a){
+    if(a+b>c||a+c>b||b+c>a){
         poleherona=sqrt(pole(a,b,c)*(pole(a,b,c)-a)*(pole(a,b,c)-b)*(pole(a,b,c)-c));
         return poleherona;
     }

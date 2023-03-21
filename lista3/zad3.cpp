@@ -12,7 +12,7 @@ int *totolotek(){
     int *tab=new int [5];
     for(int i=0;i<5;i++){
         tab[i]=rand()%b+a;
-        while(tab[i]==tab[i-1]|tab[i]==tab[i-2]|tab[i]==tab[i-3]|tab[i]==tab[i-4]|tab[i]==tab[i-5]){
+        while(tab[i]==tab[i-1]||tab[i]==tab[i-2]||tab[i]==tab[i-3]||tab[i]==tab[i-4]||tab[i]==tab[i-5]){
             tab[i]=rand()%b+a;
         }
         cout<<tab[i]<<"\t";
@@ -38,7 +38,7 @@ void czywygral(int *tab1,int**tab2,const int kupony){
     int liczba=0;
     for(int i=0;i<kupony;i++){
         for(int j=0;j<5;j++){
-            if(tab2[i][j]==tab1[0]|tab2[i][j]==tab1[1]|tab2[i][j]==tab1[2]|tab2[i][j]==tab1[3]|tab2[i][j]==tab1[4]){
+            if(tab2[i][j]==tab1[0]||tab2[i][j]==tab1[1]||tab2[i][j]==tab1[2]||tab2[i][j]==tab1[3]||tab2[i][j]==tab1[4]){
                 liczba++;
             }
         }

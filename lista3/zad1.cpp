@@ -6,8 +6,8 @@
 using namespace std;
 
 void wypisz(int**tab,const unsigned int n,const unsigned int m){
-    for (int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
+    for (unsigned int i=0;i<n;i++){
+        for(unsigned int j=0;j<m;j++){
             cout<<tab[i][j]<<"\t";
         }
         cout<<endl;
@@ -16,7 +16,7 @@ void wypisz(int**tab,const unsigned int n,const unsigned int m){
 
 int **utworz(const unsigned int n,const unsigned int m){
     int **tab=new int *[n];
-    for (int i=0;i<n;i++){
+    for (unsigned int i=0;i<n;i++){
         tab[i]=new int[m];
     }
     return tab;
@@ -24,33 +24,33 @@ int **utworz(const unsigned int n,const unsigned int m){
 
 void utworz(int**& tab,const unsigned int n,const unsigned int m){
     tab=new int *[n];
-    for(int i=0;i<n;i++){
+    for(unsigned int i=0;i<n;i++){
         tab[i]=new int[m];
     }
 }
 void utworz1(int**tab,const unsigned int n,const unsigned int m){
-    for (int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
+    for (unsigned int i=0;i<n;i++){
+        for(unsigned int j=0;j<m;j++){
             tab[i][j]=0;
         }
     }
 }
 int * utworz1(const unsigned int m){
     int *tab=new int [m];
-    for (int i=0;i<m;i++){
+    for (unsigned int i=0;i<m;i++){
             tab[i]=0;
     }
     return tab;
 }
 void usun(int**tab,const unsigned int n,const unsigned int m){
-    for (int i=0;i<n;i++){
+    for (unsigned int i=0;i<n;i++){
             delete [] tab[i];
         }
         delete []tab;
 }
 void wypelnij(int**tab,const unsigned int n,const unsigned int m){
-        for (int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
+        for (unsigned int i=0;i<n;i++){
+        for(unsigned int j=0;j<m;j++){
             tab[i][j]=rand()%10;
         }
     }
@@ -58,8 +58,8 @@ void wypelnij(int**tab,const unsigned int n,const unsigned int m){
 int **suma(int**tab1,int**tab2,const unsigned int n,const unsigned int m){
     int **tabc;
     utworz(tabc,n,m);
-    for (int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
+    for (unsigned int i=0;i<n;i++){
+        for(unsigned int j=0;j<m;j++){
             tabc[i][j]=tab1[i][j]+tab2[i][j];
         }
     }
@@ -68,8 +68,8 @@ int **suma(int**tab1,int**tab2,const unsigned int n,const unsigned int m){
 int **roznica(int**tab1,int**tab2,const unsigned int n,const unsigned int m){
     int **tabc;
     utworz(tabc,n,m);
-    for (int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
+    for (unsigned int i=0;i<n;i++){
+        for(unsigned int j=0;j<m;j++){
             tabc[i][j]=tab1[i][j]-tab2[i][j];
         }
     }
@@ -77,12 +77,11 @@ int **roznica(int**tab1,int**tab2,const unsigned int n,const unsigned int m){
 }
 int **iloczyn(int**tab1,int**tab2,const unsigned int n,const unsigned int m,const unsigned int p,const unsigned int r){
 int **tabc;
-int suma=0;
     if(m==p){
     utworz(tabc,n,r);
-    for (int i=0;i<n;i++){
-        for(int s=0;s<r;s++){
-            for(int j=0;j<p;j++){
+    for (unsigned int i=0;i<n;i++){
+        for(unsigned int s=0;s<r;s++){
+            for(unsigned int j=0;j<p;j++){
                tabc[i][s]+=tab1[i][j]*tab2[j][s];
             }
         }
@@ -96,8 +95,8 @@ int suma=0;
 int **transpose(int **tab,const unsigned int n,const unsigned int m){
     int **tabt;
     utworz(tabt,m,n);
-    for(int i=0;i<n;i++){
-        for (int j=0;j<m;j++){
+    for(unsigned int i=0;i<n;i++){
+        for (unsigned int j=0;j<m;j++){
             tabt[j][i]=tab[i][j];
         }
     }

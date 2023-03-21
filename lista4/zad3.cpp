@@ -13,12 +13,12 @@ bool palindrom(const char*src){
     for (;i<j;i++,j--){
         while(src[i]==' ')i++;
         while(src[j]==' ')j--;
-        while(src[i]=='?')i++;
-        while(src[j]=='?')j--;
+        // while(src[i]=='?')i++;
+        // while(src[j]=='?')j--;
         while(src[i]=='!')i++;
         while(src[j]=='!')j--;
-        while(src[i]=='.')i++;
-        while(src[j]=='.')j--;
+        // while(src[i]=='.')i++;
+        // while(src[j]=='.')j--;
         while(src[i]==',')i++;
         while(src[j]==',')j--;        
         if(src[i]!=src[j]){
@@ -30,6 +30,11 @@ bool palindrom(const char*src){
 }
 
 int main(int argc,char*argv[]){
+    if(argc!=2){
+        cerr<<"Nieprawidłowa ilośc przekazanych argumentów(2)!"<<endl;
+        cout<<"Wymagane argumenty to: ./nazwa,zdanie"<<endl;
+        return 1;
+    }
     cout<<"\n"<<palindrom(argv[1])<<endl;
     return 0;
 }
