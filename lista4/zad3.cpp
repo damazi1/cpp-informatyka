@@ -20,7 +20,7 @@ bool palindrom(const char*src){
         // while(src[i]=='.')i++;
         // while(src[j]=='.')j--;
         while(src[i]==',')i++;
-        while(src[j]==',')j--;        
+        while(src[j]==',')j--;        //usunąć znaki białe od <a i większe niż z>
         if(src[i]!=src[j]){
             return false;
     }
