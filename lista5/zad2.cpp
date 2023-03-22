@@ -9,12 +9,10 @@ using namespace std;
 int liczba_wyrazow(string src){
     int slowa=0;
     size_t n=src.size(),i=0;
-    while(src=="  "){
         auto spacje=unique(src.begin(),src.end(),[](char const &lhs,char const &rhs){
         return(lhs==rhs)&&(lhs==' ');
     });
     src.erase(spacje,src.end());
-}
     for (;i<n;i++){
         if(src[i]==' '){
             slowa++;
