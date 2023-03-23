@@ -25,8 +25,8 @@ void palindrom(char*src){
     i=0;
     for(;i<j;i++){
         if(tab[i]>=65){
-            palin[i].replace('')
-        }
+            palin.erase()
+                   }
         if(tab[i]<=90){
             src[i]=palin[i];
         }
