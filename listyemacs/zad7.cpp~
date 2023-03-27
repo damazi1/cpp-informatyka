@@ -1,0 +1,64 @@
+#include <iostream>
+#include <cmath>
+#include <ctime>
+
+using namespace std;
+
+void wypelnij(int *tab,const int n){
+  int i=0;
+  for(;i<n;i++){
+    tab[i]=rand()%10;
+  }
+}
+void wypisz(int *tab,const int n){
+  int i=0;
+  for(;i<n;i++){
+    cout<<i+1<<". "<<tab[i]<<endl;
+  }
+}
+
+void usun(int *tab){
+  if(tab){
+    delete [] tab;
+    tab=nullptr;
+  }
+}
+
+void sortuj(int *tab,const int n){
+  int i=0;
+  int pom;
+  pom=tab[0];
+  for(;i<n;i++){
+    if(tab[i]>tab[i+1]){
+      pom=tab[i];
+      tab[i]=tab[i+1];
+      tab[i+1]=pom;
+      i=0;
+    }
+  }
+}
+
+int main(int argc,char *argv[]){
+  if (argc!=1){
+    cerr<<"Podana liczba argumentow jest bledna(1)\n";
+    cout<<"Poprawny zapis to ./nazwa\n";
+    return 1;
+  }
+  srand(time(NULL));
+  int *tab;
+  unsigned int n;
+  cout<<"Podaj wielkosc tablicy: ";
+  cin>>n;
+  
+  tab=new int [n];
+
+  wypelnij(tab,n);
+  wypisz(tab,n);
+  
+  sortuj(tab,n);
+  wypisz(tab,n);
+
+  usun(tab);
+  
+  return 0;
+}
