@@ -61,9 +61,10 @@ void usun(char*t){
 
 
 int main(int argc, char*argv[]){
-    if(argc!=3){
-        cerr<<"Zla ilosc argumentow (3)"<<endl;
-        cout<<"Prawidłowy zapis funkcji to ./nazwa zdanie1 zdanie2"<<endl;
+    if(argc!=7){
+        cerr<<"Zla ilosc argumentow (7)"<<endl;
+        cout<<"Prawidłowy zapis funkcji to ./nazwa zdanie1 litera (wyraz/zdanie) litera(do znalezienia) slowo(do znalezienia) zdanie2(do porownania)"<<endl;
+        return 1;
     }
     // size_t n=strlen(argv[1]);
     char *dest=nullptr;
@@ -71,17 +72,17 @@ int main(int argc, char*argv[]){
     kopiuj(argv[1],dest);
     cout<<dest<<endl;
 
-    cout<<wstaw(argv[1],'X',3)<<endl;
+    cout<<wstaw(argv[1],argv[2][0],3)<<endl;
 
-    cout<<wstaw(argv[1]," i grzegorz",3)<<endl;
+    cout<<wstaw(argv[1],argv[3],3)<<endl;
 
     cout<<wytnij(argv[1],4)<<endl;
 
-    cout<<"a znajduje się na "<<szukaj(argv[1],'a')<<" indeksie tego zdania"<<endl;
+    cout<<"a znajduje się na "<<szukaj(argv[1],argv[4][0])<<" indeksie tego zdania"<<endl;
 
-    cout<<"słowo ala zaczyna się na "<<szukaj(argv[1],"ala")<<" indeksie tego zdania"<<endl;
+    cout<<"słowo ala zaczyna się na "<<szukaj(argv[1],argv[5])<<" indeksie tego zdania"<<endl;
 
-    cout<<"Porównanie: "<<porownaj(argv[1],argv[2])<<endl;
+    cout<<"Porównanie: "<<porownaj(argv[1],argv[6])<<endl;
 
     usun(dest);
 

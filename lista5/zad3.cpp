@@ -4,18 +4,18 @@
 #include <array>
 #include <cmath>
 #include <cstdlib>
+#include <fstream>
 
 using namespace std;
 
 void Dane(string*&dane,size_t&n){
     size_t i=0;
-    cout<<"Podaj liczbe danych które chcesz wporwadzic: "<<endl;
-    cin>>n;
+    n=99;
     dane=new string [n];
-    cout<<"Podaj dane\n";
+    cout<<"Podaj dane osobowe\n: ";
     for(;i<n;i++){
-        cin>>dane[i];
-        cout<<endl;
+        getline(cin,dane[i]);
+        if(dane[i]=="END"||dane[i]=="end")break;
     }
 }
 
@@ -50,12 +50,22 @@ int main(int argc,char *argv[]){
     Dane(dane,n);
     maile=new string [n];
     szukaj(dane,maile,n);
-    size_t i=0;
-    cout<<"Uzyskane maile to: \n";  
+    size_t i=0,m=0;
     for(i=0;i<n;i++){
-        cout<<i<<". "<<maile[i]<<endl;
+        if(!maile[i].empty())m++;
+    }
+    cout<<"Uzyskane maile to: \n";
+    for(i=0;i<m;i++){
+        cout<<i+1<<". "<<maile[i]<<endl;
     }
 
+    ofstream outfile("maile.txt");
+
+    for(i=0;i<m;i++){
+        outfile<<maile[i]<<"; ";
+    }
+    outfile.close();
+    
     usun(dane);
     usun(maile);
 
