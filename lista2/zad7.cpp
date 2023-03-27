@@ -56,7 +56,7 @@ float poleherona(float a,float b, float c){
     }
 }
 
-void menu(){ 
+bool menu(){ 
  int wybor=0;
     cout<<"\nWybierz jakie działanie chcesz wykonać \n1.Dodawanie \n2.Odejmowanie\n3.mnozenie\n4.dzielenie\n5.do potegi 2\n6.do potegi 3\n7.obliczenie wartosci wyrazenia: (10*(x*x*x)+3.1415*(x*x))*((x/3)-(1/x*x))\n8.obwod trojkanta\n9.pole trojkonta\n0.Wyjdź ";
     cin>>wybor;
@@ -110,12 +110,10 @@ void menu(){
         case 0:
         exit(0);
     }
+    return 1;
 }
 
 int main(){
-    bool powtorz=true;
-    while(powtorz=true) {  
-    menu();
-    }
+    while(menu());
     return 0;
 }

@@ -3,7 +3,8 @@
     "iostream": "cpp",
     "ostream": "cpp",
     "random": "cpp",
-    "new": "cpp"
+    "new": "cpp",
+    "cmath": "cpp"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
