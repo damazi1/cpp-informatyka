@@ -9,48 +9,40 @@ using namespace std;
 
 void palindrom(char*src){
     size_t n=strlen(src);
-    size_t i=0,j=n;
-    char *palin=new char[n];
+    size_t i=0,j=n,k=0;
+    char *palin=new char[n+1];
     for (;i<j;i++){
-        palin[i]=toupper(src[i]);
-        cout<<palin[i];
-    }
-    i=0;
-    j=n;
-    cout<<endl;
-    int *tab=new int [n];
-    for(;i<j;i++){
-        tab[i]=(int)palin[i];
-    }
-    i=0;
-    for(;i<j;i++){
-        if(tab[i]>=65){
-            palin.erase()
-                   }
-        if(tab[i]<=90){
-            src[i]=palin[i];
+        if((src[i] >=65 && src[i] <= 90 )|| (src[i] >= 97 && src[i] <= 122)){
+            palin[k]=toupper(src[i]);
+            k++;
         }
     }
-    cout<<endl;
-    for(i=0;i<j;i++){
-        cout<<src[i];
-    }
-    i=0;
-    j=n-1;
-    for(;i<j;i++,j--){
-        if(src[i]!=src[j]){
-            return;
+    palin[k]='\0';
+    size_t l=strlen(palin);
+    bool result=1;
+    for(i=0,j=l-1;i<j;i++,j--){
+        if(palin[i]!=palin[j]){
+            cout<<"\nTwoje zdanie nie jest palindromem\n";
+            result=0;
+            break;
         }
     }
-    cout<<"\nTwoje zdanie jest palindromem"<<endl;
+
+    if(result)cout<<"\nTwoje zdanie jest palindromem"<<endl;
+
+    if(palin){
+        delete [] palin;
+        palin=nullptr;
+    }
 }
 
 int main(int argc,char*argv[]){
-    // if(argc!=2){
-    //     cerr<<"Nieprawidłowa ilośc przekazanych argumentów(2)!"<<endl;
-    //     cout<<"Wymagane argumenty to: ./nazwa,zdanie"<<endl;
-    //     return 1;
-    // }
-    palindrom("Ala mam AlA");
+    if(argc!=2){
+        cerr<<"Nieprawidłowa ilośc przekazanych argumentów(2)!"<<endl;
+        cout<<"Wymagane argumenty to: ./nazwa,zdanie"<<endl;
+        return 1;
+    }
+    palindrom(argv[1]);
+    // palindrom ("Ala mam Ala");
     return 0;
 }
