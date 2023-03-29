@@ -39,6 +39,7 @@ unsigned int **liczby_u(const unsigned int n,unsigned int &kupony,const unsigned
     for(unsigned int i=0;i<kupony;i++){
         cout<<"\nKupon nr "<<i+1<<". \n"<<"Podaj Twoje 6 liczb z zakresu <"<<a<<" , "<<b<<">. \n";
         for(unsigned int j=0;j<n;j++){
+            cout<<"Podaj liczbe "<<j+1<<". ";
             cin>>tab[i][j];
             while (tab[i][j]<a||tab[i][j]>b){
                 cout<<"Podales bledna liczbe poprawny zakres to <"<<a<<" , "<<b<<">\n Liczba ktora podales to : "<<tab[i][j]<<"\n Podaj poprawna liczbe : ";
@@ -56,6 +57,27 @@ unsigned int **liczby_u(const unsigned int n,unsigned int &kupony,const unsigned
     return tab;
 }
 
+bool sprawdz(unsigned int *tab,unsigned  int**tab1,const unsigned int n,const unsigned int m,unsigned int &w4,unsigned int &w5,unsigned int &w6){
+    int liczba=0;
+    for(unsigned int i=0;i<m;i++){
+        liczba=0;
+        for(unsigned int j=0;j<n;j++){
+            for(unsigned int k=0;k<n;k++){
+                if(tab[j]==tab1[i][k]){
+                    liczba++;
+                }
+            }
+        }
+        if(liczba==4)w4++;
+        if(liczba==5)w5++;
+        if(liczba==6)w6++;
+    }
+    if(w4+w5+w6!=0){
+        cout<<"Wygrales "<<w4+w5+w6 << " razy."<<endl;
+        return 1;
+    }
+    return 0;
+}
 
 
 void usun(unsigned int **tab,const unsigned int n){
@@ -84,7 +106,7 @@ int main(int argc,char *argv[]){
         cout<<"Poprawny zapis to ./nazwa"<<endl;
         return 1;
     }
-    unsigned int n=6,m,a,b;
+    unsigned int n=6,m,a,b,w4=0,w5=0,w6=0;
     unsigned int *tab=losowanie(n,a,b);
 
  
@@ -94,6 +116,22 @@ int main(int argc,char *argv[]){
 
     unsigned int **liczby=liczby_u(n,m,a,b);
 
+    bool wygrana=sprawdz(tab,liczby,n,m,w4,w5,w6);
+
+    if(wygrana){
+        if(w4){
+            cout<<"wygrales 100zl "<<w4<<" razy."<<endl;
+        }
+        if(w5){
+            cout<<"wygrales 1000zl "<<w5<<" razy"<<endl;
+        }
+        if(w6){
+            cout<<"wygrales 10000zl "<<w6<<" razy"<<endl;
+        }
+    }
+    else{
+        cout<<"Nic nie wygrales :(\n sprobuj jeszcze raz... \n";
+    }
 
     usun(tab);
     usun(liczby,m);
