@@ -4,7 +4,10 @@
     "ostream": "cpp",
     "random": "cpp",
     "new": "cpp",
-    "cmath": "cpp"
+    "cmath": "cpp",
+    "*.tcc": "cpp",
+    "fstream": "cpp",
+    "iosfwd": "cpp"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
