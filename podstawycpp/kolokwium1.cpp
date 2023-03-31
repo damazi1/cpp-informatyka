@@ -58,6 +58,10 @@ void usun (int ** tab,const unsigned int n){
   }
 }
 
+void filtruj1(ifstream& fin,){
+
+}
+
 int main(int argc,char *argv[]){
   if(argc!=1){
     cerr<<"bledna ilosc argumentow()"<<endl;
@@ -75,8 +79,17 @@ int main(int argc,char *argv[]){
   min_max(tab,n,m,min,max);
   cout<<"Liczba minimalna to: "<<min<<" \nMakymalna to: "<<max<<endl;
 
+  ifstream fin;
+  fin.open(argv[1]);
+
+
+
+  fin.close();
+
   usun(tab,n);
   
+
+
   
   return 0;
 }
