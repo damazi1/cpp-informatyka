@@ -1,0 +1,51 @@
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <fstream>
+#include <cstring>
+#include <string>
+
+using namespace std;
+
+int **utworz(const unsigned int n,const unsigned int m){
+  int **tab=new int *[n];
+  for(unsigned int i=0;i<n;i++){
+    tab[i]=new int [m];
+  }
+
+  for(unsigned int i=0;i<n;i++){
+    for(unsigned int j=0;j<m;j++){
+      tab[i][j]=0;
+    }
+  }
+  
+  return tab;
+}
+
+void usun (int ** tab,const unsigned int n){
+  if(tab){
+    for(unsigned int i=0;i<n;i++){
+      delete [] tab[i];
+    }
+    delete [] tab;
+    tab=nullptr;
+  }
+}
+
+int main(int argc;char *argv[]){
+  if(argc!=1){
+    cerr<<"bledna ilosc argumentow()"<<endl;
+    cout<<"Poprawny zapis to: ./nazwa "<<endl;
+    return 1;
+  }
+
+  int n,m;
+  cout<<"Podaj wielkosci tablicy 2-wymiarowej(x,y): ";
+  cin>>n>>m;
+
+  int** tab=utworz(n,m);
+
+  usun(tab);
+  
+  return 0;
+}

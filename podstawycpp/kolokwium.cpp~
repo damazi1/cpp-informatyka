@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+void usun (int *tab){
+  if(tab){
+    delete [] tab;
+    tab = nullptr;
+  }
+}
+
+int main(int argc,char* argv[]){
+  if (argc!=1){
+    cerr>>"Podano bledna ilosc argumentow(1)"<<endl;
+    cout>>"Poprawny zapis to ./nazwa"<<endl;
+    return 1;
+  }
+  int n;
+  int *tab;
+  cout<<"Podaj wielkosc tablicy: ";
+  cin>>n;
+
+  tab=new int [n];
+
+
+  usun(tab);
+  
+  return 0;
+}
