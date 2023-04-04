@@ -1,10 +1,5 @@
-10;
-2;
-16;
-24;
-16;
-14;
-8;
-10;
-8;
-10;
+kowal@onet.pl;
+ala@buziaczek.pl;
+mieczfog@wp.pl;
+korneliusz.wielki@gmail.com;
+wojciech.nowak@pbn.gov.pl;
