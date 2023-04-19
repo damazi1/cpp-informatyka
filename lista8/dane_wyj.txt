@@ -1,0 +1,19 @@
+
+Wypełnienie przy pomocy refeerncji na strukture 
+Osoba Pełnoletnia
+Dawid	Ziora	23	Poraj	Slaskie	
+Wypełnienie przy pomocy wskaznika na strukture 
+Osoba Pełnoletnia
+Dawid	Ziora	23	Poraj	Slaskie	
+Wypełnienie przy zwykłej struktury 
+Osoba Pełnoletnia
+Dawid	Ziora	23	Poraj	Slaskie	
+Wypełnienie przy pomocy refeerncji na strukture 
+Osoba Niepełnoletnia
+Dawid	Ziora	13	Poraj	Slaskie	
+Wypełnienie przy pomocy wskaznika na strukture 
+Osoba Niepełnoletnia
+Dawid	Ziora	13	Poraj	Slaskie	
+Wypełnienie przy zwykłej struktury 
+Osoba Niepełnoletnia
+Dawid	Ziora	13	Poraj	Slaskie	
