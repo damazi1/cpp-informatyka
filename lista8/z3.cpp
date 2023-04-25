@@ -37,7 +37,7 @@ ifstream otworzwej(string nazwa){
 
 ofstream otworzwyj(string nazwa){
     ofstream fout;
-    fout.open(nazwa);    
+    fout.open(nazwa , ios::app);    
     return fout;
 }
 
@@ -122,52 +122,67 @@ void uzupelnij1(SOsoba* osoba){
 
 
 void wypelnij(SOsoba& osoba){
-    ofstream fout;
-    fout.open("dane_wyj.txt",ios::app);
-
+    ofstream fout=otworzwyj("dane_wyj.txt");
+    sprawdz(fout);
     if(fout.good()){
-        fout<<"\nWypełnienie przy pomocy refeerncji na strukture \n";
+        fout<<"Wypełnienie przy pomocy refeerncji na strukture \n";
+        sprawdz(fout);
         fout<<selektor(osoba);
+        sprawdz(fout);
         fout<<osoba.imie<<'\t';
+        sprawdz(fout);
         fout<<osoba.nazwisko<<'\t';
+        sprawdz(fout);
         fout<<2023-osoba.rok_urodzenia<<'\t';
+        sprawdz(fout);
         fout<<osoba.miejsce_zamieszkania<<'\t';
+        sprawdz(fout);
         fout<<osoba.wojewodztwo<<'\t';
         
     }
-    fout.close();
+    zamknij(fout);
 }
 
 void wypelnij1(SOsoba* osoba){
-    ofstream fout;
-    fout.open("dane_wyj.txt",ios::app);
-
+    ofstream fout=otworzwyj("dane_wyj.txt");
+    sprawdz(fout);
     if(fout.good()){
         fout<<"\nWypełnienie przy pomocy wskaznika na strukture \n";
+        sprawdz(fout);
         fout<<selektor1(osoba);
+        sprawdz(fout);
         fout<<osoba->imie<<'\t';
+        sprawdz(fout);
         fout<<osoba->nazwisko<<'\t';
+        sprawdz(fout);
         fout<<2023-osoba->rok_urodzenia<<'\t';
+        sprawdz(fout);
         fout<<osoba->miejsce_zamieszkania<<'\t';
+        sprawdz(fout);
         fout<<osoba->wojewodztwo<<'\t';
         
     }
-    fout.close();
+    zamknij(fout);
 }
 void wypelnij2(SOsoba osoba){
-    ofstream fout;
-    fout.open("dane_wyj.txt",ios::app);
-
+    ofstream fout=otworzwyj("dane_wyj.txt");
+    sprawdz(fout);
     if(fout.good()){
         fout<<"\nWypełnienie przy zwykłej struktury \n";
+        sprawdz(fout);
         fout<<selektor(osoba);
+        sprawdz(fout);
         fout<<osoba.imie<<'\t';
+        sprawdz(fout);
         fout<<osoba.nazwisko<<'\t';
+        sprawdz(fout);
         fout<<2023-osoba.rok_urodzenia<<'\t';
+        sprawdz(fout);
         fout<<osoba.miejsce_zamieszkania<<'\t';
+        sprawdz(fout);
         fout<<osoba.wojewodztwo<<'\t';
     }
-    fout.close();
+    zamknij(fout);
 }
 
 int main(){
