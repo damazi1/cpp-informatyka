@@ -32,10 +32,10 @@ bool wczytaj(SCzas*& daty,int* n, const char* plik_wej){
     string plik_w=plik_wej;
     ifstream fin=otworz(plik_w);
     sprawdz(fin);
-    int n;
-    fin<<n;
+    fin >>*n;
+    sprawdz(fin);
     if(fin.good()){
-
+        
     }
     zamknij(fin);
     return false;
