@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
+#include <cmath>
+#include <iomanip>
 
 using namespace std;
 
@@ -59,7 +61,7 @@ void zamknij(ofstream &fout)
     fout.close();
 }
 
-bool wczytaj(const char *plik_wyj, SKonto *&konta, int &n) // o co chodzi z tym wskaźnikiem na konta ? 
+bool wczytaj(const char *plik_wyj, SKonto *&konta, int &n) // o co chodzi z tym wskaźnikiem na konta ?
 {
     string plik_wej = plik_wyj;
     ifstream fin = otworz(plik_wej);
@@ -78,7 +80,7 @@ bool wczytaj(const char *plik_wyj, SKonto *&konta, int &n) // o co chodzi z tym 
             sprawdz(fin);
             fin >> konta[i].nazwisko;
             sprawdz(fin);
-            fin >>konta[i].id;
+            fin >> konta[i].id;
             sprawdz(fin);
             fin >> konta[i].data;
             sprawdz(fin);
@@ -93,27 +95,65 @@ bool wczytaj(const char *plik_wyj, SKonto *&konta, int &n) // o co chodzi z tym 
 
 void dodajTransakcje(SKonto *konta, int &n, const string &nr_konta, const string &imie, const string &nazwisko, int id_transakcji, const string &data, double kwota)
 {
+    konta[n].numerkonta = nr_konta;
+    konta[n].imie = imie;
+    konta[n].nazwisko = nazwisko;
+    konta[n].id = id_transakcji;
+    konta[n].data = data;
+    konta[n].kwota = kwota;
     n++;
-    konta[n-1].numerkonta=nr_konta;
-    konta[n-1].imie=imie;
-    konta[n-1].nazwisko=nazwisko;
-    konta[n-1].id=id_transakcji;
-    konta[n-1].data=data;
-    konta[n-1].kwota=kwota;
-    return &konta[n-1];
 }
 
 string losuj(int min = 0, int max = 9)
 {
-    return "Kox";
+    int liczba = rand() % max + 1;
+    string wylosowana = to_string(liczba);
+    return wylosowana;
 }
 
 void wypisz(const SKonto *konta, const int n)
 {
+    if (konta)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            cout << setw(10);
+            cout << konta[i].numerkonta << '\t';
+            cout << konta[i].imie << '\t';
+            cout << konta[i].nazwisko << '\t';
+            cout << konta[i].id << '\t';
+            cout << konta[i].data << '\t';
+            cout << setprecision(2);
+            cout << fixed;
+            cout << konta[i].kwota << '\n';
+        }
+    }
 }
 
 bool wypisz(const string plik_wyj, const SKonto *konta, const int n)
 {
+    ofstream fout = otworz1(plik_wyj);
+    sprawdz(fout);
+    if (fout.good()){
+        for (int i=0;i<n;i++){
+            sprawdz(fout);
+            fout<<konta[i].numerkonta<<'\t';
+            sprawdz(fout);
+            fout<<konta[i].imie<<'\t';
+            sprawdz(fout);
+            fout<<konta[i].nazwisko<<'\t';
+            sprawdz(fout);
+            fout<<konta[i].id<<'\t';
+            sprawdz(fout);
+            fout<<konta[i].data<<'\t';
+            sprawdz(fout);
+            fout<<konta[i].kwota<<'\n';
+        }
+
+
+        return true;
+    }
+    zamknij(fout);
     return false;
 }
 
@@ -139,6 +179,7 @@ int main(int argc, char *argv[])
         cout << "Poprawny zapis to ./nazwa plik_wej plik_wyj" << endl;
         return -1;
     }
+    srand(time(NULL));
     SKonto *konta = nullptr, *nowe_konto = nullptr;
     int n = 0;
     if (wczytaj(argv[1], konta, n))
