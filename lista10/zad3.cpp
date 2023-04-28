@@ -93,15 +93,27 @@ bool wczytaj(const char *plik_wyj, SKonto *&konta, int &n) // o co chodzi z tym 
     return false;
 }
 
-void dodajTransakcje(SKonto *konta, int &n, const string &nr_konta, const string &imie, const string &nazwisko, int id_transakcji, const string &data, double kwota)
+SKonto *dodajTransakcje(SKonto *konta, int &n, const string &nr_konta, const string &imie, const string &nazwisko, int id_transakcji, const string &data, double kwota)
 {
-    konta[n].numerkonta = nr_konta;
-    konta[n].imie = imie;
-    konta[n].nazwisko = nazwisko;
-    konta[n].id = id_transakcji;
-    konta[n].data = data;
-    konta[n].kwota = kwota;
+
+    SKonto *konto = new SKonto[n + 1];
+    for (int i = 0; i < n; i++)
+    {
+        konto[i].numerkonta = konta[i].numerkonta;
+        konto[i].imie = konta[i].imie;
+        konto[i].nazwisko = konta[i].nazwisko;
+        konto[i].id = konta[i].id;
+        konto[i].data = konta[i].data;
+        konto[i].kwota = konta[i].kwota;
+    }
+    konto[n].numerkonta = nr_konta;
+    konto[n].imie = imie;
+    konto[n].nazwisko = nazwisko;
+    konto[n].id = id_transakcji;
+    konto[n].data = data;
+    konto[n].kwota = kwota;
     n++;
+    return konto;
 }
 
 string losuj(int min = 0, int max = 9)
@@ -134,22 +146,23 @@ bool wypisz(const string plik_wyj, const SKonto *konta, const int n)
 {
     ofstream fout = otworz1(plik_wyj);
     sprawdz(fout);
-    if (fout.good()){
-        for (int i=0;i<n;i++){
+    if (fout.good())
+    {
+        for (int i = 0; i < n; i++)
+        {
             sprawdz(fout);
-            fout<<konta[i].numerkonta<<'\t';
+            fout << konta[i].numerkonta << '\t';
             sprawdz(fout);
-            fout<<konta[i].imie<<'\t';
+            fout << konta[i].imie << '\t';
             sprawdz(fout);
-            fout<<konta[i].nazwisko<<'\t';
+            fout << konta[i].nazwisko << '\t';
             sprawdz(fout);
-            fout<<konta[i].id<<'\t';
+            fout << konta[i].id << '\t';
             sprawdz(fout);
-            fout<<konta[i].data<<'\t';
+            fout << konta[i].data << '\t';
             sprawdz(fout);
-            fout<<konta[i].kwota<<'\n';
+            fout << konta[i].kwota << '\n';
         }
-
 
         return true;
     }
@@ -159,6 +172,31 @@ bool wypisz(const string plik_wyj, const SKonto *konta, const int n)
 
 bool wypisz(const char *plik_wyj, const SKonto *konta, const int n, const string nr_konta)
 {
+    ofstream fout = otworz1(plik_wyj);
+    sprawdz(fout);
+    if (fout.good())
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (konta[i].numerkonta == nr_konta)
+            {
+                sprawdz(fout);
+                fout << konta[i].numerkonta << '\t';
+                sprawdz(fout);
+                fout << konta[i].imie << '\t';
+                sprawdz(fout);
+                fout << konta[i].nazwisko << '\t';
+                sprawdz(fout);
+                fout << konta[i].id << '\t';
+                sprawdz(fout);
+                fout << konta[i].data << '\t';
+                sprawdz(fout);
+                fout << konta[i].kwota << '\n';
+                zamknij(fout);
+                return true;
+            }
+        }
+    }
     return false;
 }
 
@@ -186,7 +224,7 @@ int main(int argc, char *argv[])
     {
         wypisz(konta, n);
         string los = losuj();
-        nowe_konto = dodajTransakcje(konta, n, los, "Kalina","Czerwiec", 1, "2023/02/20", 123000);
+        nowe_konto = dodajTransakcje(konta, n, los, "Kalina", "Czerwiec", 1, "2023/02/20", 123000);
         wypisz(nowe_konto, n);
         wypisz(argv[2], nowe_konto, n);
         string nr_konta = "4556400001";

@@ -71,26 +71,29 @@ SProstopadloscian *wczytaj(const char *plik_wej, int &n)
             sprawdz(fin);
             fin >> prost[i].wysokosc;
         }
+        zamknij(fin);
         return prost;
     }
+    zamknij(fin);
     return nullptr;
 }
 
-float pole(const SProstopadloscian* p)
+float pole(const SProstopadloscian *p)
 {
-    float pole = 2*p->dlugosc*p->szerokosc+2*p->dlugosc*p->wysokosc+2*p->szerokosc*p->wysokosc;
+    float pole = 2 * p->dlugosc * p->szerokosc + 2 * p->dlugosc * p->wysokosc + 2 * p->szerokosc * p->wysokosc;
     return pole;
 }
 
 int znajdz_pole(const SProstopadloscian *p, const int n)
 {
-    int k=0;
-    float pol=0;
-    for (int i=0;i<n;i++){
-        pol=pole(&p[i]);
-        if(pol<pole(&p[i+1])){
-            pol=pole(&p[i+1]);
-            k=i+1;
+    int k = 0;
+    float pol = pole(&p[0]);
+    for (int i = 0; i < n; i++)
+    {
+        if (pol < pole(&p[i]))
+        {
+            pol = pole(&p[i]);
+            k = i;
         }
     }
     return k;
@@ -98,38 +101,96 @@ int znajdz_pole(const SProstopadloscian *p, const int n)
 
 float objetosc(const SProstopadloscian &p)
 {
-    return 0;
+    float V = p.dlugosc * p.szerokosc * p.wysokosc;
+    return V;
 }
 
 float znajdz_objetosc(const SProstopadloscian *p, const int n)
 {
-    return 0;
+    float Vszuk = objetosc(p[0]);
+    for (int i = 0; i < n; i++)
+    {
+        if (Vszuk < objetosc(p[i]))
+        {
+            Vszuk = objetosc(p[i]);
+        }
+    }
+    return Vszuk;
 }
 
 bool wysokosc(const SProstopadloscian &p1, const SProstopadloscian &p2)
 {
+    if (p1.wysokosc > p2.wysokosc)
+    {
+        return true;
+    }
     return false;
 }
 
 void sortuj(SProstopadloscian *p, const int n, bool (*wfun)(const SProstopadloscian &, const SProstopadloscian &))
 {
+    float dlugosc, szerokosc, wysokosc;
+    for (int i = 0; i < n - 1; i++)
+    {
+        while (wfun(p[i], p[i + 1]))
+        {
+            dlugosc = p[i].dlugosc;
+            szerokosc = p[i].szerokosc;
+            wysokosc = p[i].wysokosc;
+            p[i].dlugosc = p[i + 1].dlugosc;
+            p[i].szerokosc = p[i + 1].szerokosc;
+            p[i].wysokosc = p[i + 1].wysokosc;
+            p[i + 1].dlugosc = dlugosc;
+            p[i + 1].szerokosc = szerokosc;
+            p[i + 1].wysokosc = wysokosc;
+            i = 0;
+        }
+    }
 }
 
 void wypisz(const SProstopadloscian *p)
 {
+    cout << p->dlugosc << '\t' << p->szerokosc << '\t' << p->wysokosc << '\n';
 }
 
 void wypisz(const SProstopadloscian *p, const int n)
 {
+    for (int i = 0; i < n; i++)
+    {
+        wypisz(&p[i]);
+    }
 }
 
 bool wypisz(const SProstopadloscian &p, ofstream &fout)
 {
+    sprawdz(fout);
+    if (fout.good())
+    {
+        sprawdz(fout);
+        fout << p.dlugosc << '\t';
+        sprawdz(fout);
+        fout << p.szerokosc << '\t';
+        sprawdz(fout);
+        fout << p.wysokosc << '\n';
+        return true;
+    }
     return false;
 }
 
 bool wypisz(const SProstopadloscian *p, const int n, const string &plik_wyj)
 {
+    ofstream fout = otworz1(plik_wyj);
+    sprawdz(fout);
+    if (fout.good())
+    {
+        for (int i = 0; i < n; i++)
+        {
+            wypisz(p[i], fout);
+        }
+        zamknij(fout);
+        return true;
+    }
+    zamknij(fout);
     return false;
 }
 
