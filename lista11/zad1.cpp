@@ -27,10 +27,21 @@ struct SOsoba
     }
 
     SOsoba wczytaj(ifstream &);
-    bool wypisz(SOsoba &, ostream &out = cout);
+    bool wypisz(ostream &out = cout);
 };
 
 bool sprawdz(ifstream &fin)
+{
+    if (!fin.good())
+    {
+        cerr << "Błąd na strumieniu Wejściowym !!";
+        fin.clear();
+        fin.close();
+        return 1;
+    }
+    return 0;
+}
+bool sprawdz(ofstream &fin)
 {
     if (!fin.good())
     {
@@ -41,76 +52,89 @@ bool sprawdz(ifstream &fin)
     }
     return 0;
 }
-void sprawdz(ofstream &fin)
+
+bool sprawdz(ostream &fin)
 {
     if (!fin.good())
     {
         cerr << "Błąd na strumieniu !!";
         fin.clear();
-        fin.close();
-        exit(0);
+        return 1;
     }
+    return 0;
 }
 
-void sprawdz(ostream &fin)
+void czysc(SOsoba &osoba)
 {
-    if (!fin.good())
-    {
-        cerr << "Błąd na strumieniu !!";
-        fin.clear();
-        exit(0);
-    }
+    osoba.id = 0;
+    osoba.email = "";
+    osoba.rok_urodzenia = 0;
+    osoba.imie = "";
 }
 
 SOsoba SOsoba::wczytaj(ifstream &fin)
 {
     SOsoba osoba;
-    sprawdz(fin);
+    if (sprawdz(fin))
+        return osoba;
     if (fin.good())
     {
         fin >> osoba.id;
         if (sprawdz(fin))
         {
-        };
+            czysc(osoba);
+            return osoba;
+        }
         fin >> osoba.email;
-        sprawdz(fin);
+        if (sprawdz(fin))
+        {
+            czysc(osoba);
+            return osoba;
+        }
         fin >> osoba.rok_urodzenia;
-        sprawdz(fin);
+        if (sprawdz(fin))
+        {
+            czysc(osoba);
+            return osoba;
+        }
         fin >> osoba.imie;
         return osoba;
     }
-    osoba.id = 0;
-    osoba.email = "";
-    osoba.rok_urodzenia = 0;
-    osoba.imie = "";
+    SOsoba();
     return osoba;
 }
 
-bool SOsoba::wypisz(SOsoba &osoba, ostream &out)
+bool SOsoba::wypisz(ostream &out)
 {
-    if (osoba.id)
+    if (sprawdz(out))
+        return false;
+    if (id)
     {
-        out << osoba.id << ' ';
-        if (osoba.email.empty())
+        out << id << ' ';
+        if (sprawdz(out))
+            return false;
+        if (email != "")
         {
-            out << osoba.email << ' ';
-            if (osoba.rok_urodzenia)
+            out << email << ' ';
+            if (sprawdz(out))
+                return false;
+            if (rok_urodzenia)
             {
-                out << osoba.rok_urodzenia << ' ';
-                if (osoba.imie != "")
+                out << rok_urodzenia << ' ';
+                if (sprawdz(out))
+                    return false;
+                if (imie != "")
                 {
-                    out << osoba.imie << endl;
+                    out << imie << endl;
+                    if (sprawdz(out))
+                        return false;
                     return true;
                 }
             }
         }
     }
-    if (!out.good())
-    {
-        cerr << "Błąd na domyślnym strumieniu wyjściowym !!";
-        out.clear();
+    if (sprawdz(out))
         return false;
-    }
     return false;
 }
 
@@ -119,96 +143,120 @@ struct SLista
     string nazwa;
     int n;
     SOsoba *osoba;
-    bool wczytaj(SLista &, ifstream &);
-    bool wypisz(SLista &, ostream &out = cout);
-    SOsoba szukaj(SLista &, const unsigned int);
-    void podziel(SLista &, ofstream &, ofstream &);
+
+    SLista()
+    {
+        nazwa = "";
+        n = 0;
+        osoba = nullptr;
+    }
+
+    ~SLista()
+    {
+        nazwa = "";
+        n = 0;
+        if (osoba)
+        {
+            delete[] osoba;
+            osoba = nullptr;
+        }
+    }
+
+    bool wczytaj(ifstream &);
+    bool wypisz(ostream &out = cout);
+    SOsoba szukaj(const unsigned int);
+    void podziel(ofstream &, ofstream &);
 };
 
-bool SLista::wczytaj(SLista &lista, ifstream &fin)
-{
-    sprawdz(fin);
+bool SLista::wczytaj(ifstream &fin)
+{ // usun
+    if (sprawdz(fin))
+        return false;
     if (fin.good())
     {
-        fin >> lista.nazwa;
-        sprawdz(fin);
-        fin >> lista.n;
-        sprawdz(fin);
-        if (lista.n > 0)
+        fin >> nazwa;
+        if (sprawdz(fin))
+            return false;
+        fin >> n;
+        if (sprawdz(fin))
+            return false;
+        if (n > 0)
         {
-            lista.osoba = new SOsoba[lista.n];
-        }
-        for (int i = 0; i < lista.n; i++)
-        {
-            lista.osoba[i] = lista.osoba[i].wczytaj(fin);
+            osoba = new SOsoba[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                osoba[i] = osoba[i].wczytaj(fin);
+            }
         }
         return true;
     }
-    return false;
-}
-
-bool SLista::wypisz(SLista &lista, ostream &out)
-{
-    if (lista.nazwa != "")
-    {
-        out << lista.nazwa << endl;
-        for (int i = 0; i < lista.n; i++)
-        {
-            lista.osoba[i].wypisz(lista.osoba[i], out);
-        }
-    }
-    if (!out.good())
-    {
-        cerr << "Błąd na domyślnym strumieniu wyjściowym !!";
-        out.clear();
+    if (sprawdz(fin))
         return false;
-    }
     return false;
 }
 
-SOsoba SLista::szukaj(SLista &lista, const unsigned int id)
+bool SLista::wypisz(ostream &out)
 {
-    SOsoba osoba;
-    int n = id;
-    for (int i = 0; i < lista.n; i++)
+    if (sprawdz(out))
+        return false;
+    if (nazwa != "")
     {
-        if (lista.osoba[i].id == n)
+        out << nazwa << endl;
+        if (sprawdz(out))
+            return false;
+        if (n!=0){
+            out<<n<<endl;
+        
+        for (int i = 0; i < n; i++)
         {
-            osoba = lista.osoba[i];
-            return osoba;
+            if (sprawdz(out))
+                return false;
+            osoba[i].wypisz(out);
+        }
+        return true;
         }
     }
-    osoba.id = 0;
-    osoba.email = "";
-    osoba.rok_urodzenia = 0;
-    osoba.imie = "";
-    return osoba;
+    if (sprawdz(out))
+        return false;
+    return false;
 }
 
-void SLista::podziel(SLista &lista, ofstream &foutM, ofstream &foutK)
+SOsoba SLista::szukaj(const unsigned int id)
 {
-    for (int i = 0; i < lista.n; i++)
+    SOsoba os
+    int m = id;
+    for (int i = 0; i < n; i++)
     {
-        int n = size(lista.osoba[i].imie);
-        if (lista.osoba[i].imie[n - 1] == 'a')
+        if (osoba[i].id == m)
         {
-            sprawdz(foutK);
-            lista.osoba[i].wypisz(lista.osoba[i], foutK);
+            return osoba[i];
+        }
+    }
+    return SOsoba();
+}
+
+void SLista::podziel(ofstream &foutM, ofstream &foutK)
+{
+    if (sprawdz(foutM))
+        return;
+    if (sprawdz(foutK))
+        return;
+    for (int i = 0; i < n; i++)
+    {
+        int n = size(osoba[i].imie);
+        if (osoba[i].imie[n - 1] == 'a')
+        {
+            if (sprawdz(foutK))
+                return;
+            osoba[i].wypisz(osoba[i], foutK);
         }
         else
         {
-            sprawdz(foutM);
-            lista.osoba[i].wypisz(lista.osoba[i], foutM);
+            if (sprawdz(foutM))
+                return;
+            osoba[i].wypisz(osoba[i], foutM);
         }
-    }
-}
-
-void usun(SLista lista)
-{
-    if (lista.osoba)
-    {
-        delete[] lista.osoba;
-        lista.osoba = nullptr;
     }
 }
 
@@ -269,6 +317,5 @@ int main(int argc, char *argv[])
     foutK.close();
     fin.close();
 
-    usun(lista);
     return 0;
 }
