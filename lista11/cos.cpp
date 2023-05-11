@@ -58,6 +58,41 @@ struct SLista
     SOsoba szukaj(const unsigned int);
     void podziel(ofstream &, ofstream &);
 };
+
+bool sprawdz(ifstream &fin)
+{
+    if (!fin.good())
+    {
+        cerr << "Błąd na strumieniu Wejściowym !!";
+        fin.clear();
+        fin.close();
+        return 1;
+    }
+    return 0;
+}
+bool sprawdz(ofstream &fout)
+{
+    if (!fout.good())
+    {
+        cerr << "Błąd na strumieniu Wyjściowym!!";
+        fout.clear();
+        fout.close();
+        return 1;
+    }
+    return 0;
+}
+
+bool sprawdz(ostream &out)
+{
+    if (!out.good())
+    {
+        cerr << "Błąd na strumieniu konsoli !!";
+        out.clear();
+        return 1;
+    }
+    return 0;
+}
+
 SOsoba SOsoba::wczytaj(ifstream &fin)
 {
     SOsoba osoba;
@@ -97,6 +132,13 @@ SOsoba SOsoba::wczytaj(ifstream &fin)
             return SOsoba();
         }
         fin >> osoba.imie;
+        if (!fin.good())
+        {
+            cerr << "błąd 4" << endl;
+            fin.clear();
+            fin.close();
+            return SOsoba();
+        }
         return osoba;
     }
     return SOsoba();
@@ -104,64 +146,35 @@ SOsoba SOsoba::wczytaj(ifstream &fin)
 
 bool SOsoba::wypisz(ostream &out)
 {
-    if (!out.good())
-    {
-        cerr << "blad na strumieniu wyjsciowym wypisz 1" << endl;
-        out.clear();
+    if (sprawdz(out))
         return false;
-    }
     if (id != 0)
     {
         out << id << ' ';
-
-        if (!out.good())
-        {
-            cerr << "blad na strumieniu wyjsciowym wypisz 2" << endl;
-            out.clear();
+        if (sprawdz(out))
             return false;
-        }
         if (email != "")
         {
             out << email << ' ';
-
-            if (!out.good())
-            {
-                cerr << "blad na strumieniu wyjsciowym wypisz 3" << endl;
-                out.clear();
+            if (sprawdz(out))
                 return false;
-            }
             if (rok_urodzenia != 0)
             {
                 out << rok_urodzenia << ' ';
-
-                if (!out.good())
-                {
-                    cerr << "blad na strumieniu wyjsciowym wypisz 4" << endl;
-                    out.clear();
+                if (sprawdz(out))
                     return false;
-                }
                 if (imie != "")
                 {
                     out << imie << endl;
-
-                    if (!out.good())
-                    {
-                        cerr << "blad na strumieniu wyjsciowym wypisz 5" << endl;
-                        out.clear();
+                    if (sprawdz(out))
                         return false;
-                    }
                     return true;
                 }
             }
         }
     }
-
-    if (!out.good())
-    {
-        cerr << "blad na strumieniu wyjsciowym wypisz 6" << endl;
-        out.clear();
+    if (sprawdz(out))
         return false;
-    }
     return false;
 }
 
@@ -169,7 +182,7 @@ bool SLista::wczytaj(ifstream &fin)
 {
     if (!fin.good())
     {
-        cerr << "błąd wczytaj 1" << endl;
+        cerr << "błąd 1" << endl;
         fin.clear();
         fin.close();
         return false;
@@ -179,7 +192,7 @@ bool SLista::wczytaj(ifstream &fin)
         fin >> nazwa;
         if (!fin.good())
         {
-            cerr << "błąd wczytaj 2" << endl;
+            cerr << "błąd 2" << endl;
             fin.clear();
             fin.close();
             return false;
@@ -187,7 +200,7 @@ bool SLista::wczytaj(ifstream &fin)
         fin >> n;
         if (!fin.good())
         {
-            cerr << "błąd wczytaj 3" << endl;
+            cerr << "błąd 3" << endl;
             fin.clear();
             fin.close();
             return false;
@@ -203,58 +216,33 @@ bool SLista::wczytaj(ifstream &fin)
             return true;
         }
     }
-    if (!fin.good())
-    {
-        cerr << "błąd wczytaj 4" << endl;
-        fin.clear();
-        fin.close();
+    if (sprawdz(fin))
         return false;
-    }
-
     return false;
 }
 
 bool SLista::wypisz(ostream &out)
 {
-    if (!out.good())
-    {
-        cerr << "blad na strumieniu wyjsciowym wypisz 5" << endl;
-        out.clear();
+    if (sprawdz(out))
         return false;
-    }
     if (nazwa != "")
     {
         out << nazwa << endl;
-        if (!out.good())
-        {
-            cerr << "blad na strumieniu wyjsciowym wypisz 5" << endl;
-            out.clear();
+        if (sprawdz(out))
             return false;
-        }
         if (n != 0)
         {
             out << n << endl;
 
             for (int i = 0; i < n; i++)
             {
-                if (!out.good())
-                {
-                    cerr << "blad na strumieniu wyjsciowym wypisz 5" << endl;
-                    out.clear();
-                    return false;
-                }
-
                 osoba[i].wypisz();
             }
             return true;
         }
     }
-    if (!out.good())
-    {
-        cerr << "blad na strumieniu wyjsciowym wypisz 5" << endl;
-        out.clear();
+    if (sprawdz(out))
         return false;
-    }
     return false;
 }
 
@@ -273,71 +261,44 @@ SOsoba SLista::szukaj(const unsigned int id)
 
 void SLista::podziel(ofstream &foutM, ofstream &foutK)
 {
-    if (!foutM.good())
-    {
-        cerr << "błąd foutM 1" << endl;
-        foutM.clear();
-        foutM.close();
+    if (sprawdz(foutM))
         return;
-    }
-    if (!foutK.good())
-    {
-        cerr << "błąd foutM 1" << endl;
-        foutK.clear();
-        foutK.close();
+    if (sprawdz(foutK))
         return;
-    }
     for (int i = 0; i < n; i++)
     {
         int n = size(osoba[i].imie);
         if (osoba[i].imie[n - 1] == 'a')
         {
-
-            if (!foutK.good())
-            {
-                cerr << "błąd foutM 1" << endl;
-                foutK.clear();
-                foutK.close();
+            if (sprawdz(foutK))
                 return;
-            }
             osoba[i].wypisz(foutK);
         }
         else
         {
-            if (!foutM.good())
-            {
-                cerr << "błąd foutM 1" << endl;
-                foutM.clear();
-                foutM.close();
+            if (sprawdz(foutM))
                 return;
-            }
             osoba[i].wypisz(foutM);
         }
     }
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    if (argc != 5)
-    {
-        cerr << "Podano bledna ilosc argumentow(5)" << endl;
-        cout << "Poprawny zapis to ./nazwa plik_wej plik_wyj_M plik_wyj_K id_szukane" << endl;
-        return -1;
-    }
     ifstream fin;
-    fin.open(argv[1]);
+    fin.open("in.txt");
     SLista lista;
     if (lista.wczytaj(fin))
     {
         if (lista.wypisz())
         {
-            SOsoba osoba = lista.szukaj(atoi(argv[4]));
+            SOsoba osoba = lista.szukaj(12098);
             if (osoba.wypisz())
             {
                 ofstream foutM;
                 ofstream foutK;
-                foutM.open(argv[2]);
-                foutK.open(argv[3]);
+                foutM.open("outM.txt");
+                foutK.open("outK.txt");
                 lista.podziel(foutM, foutK);
                 foutM.close();
                 foutK.close();
@@ -349,20 +310,20 @@ int main(int argc, char *argv[])
                 return 1;
             }
         }
-        else
-        {
-            cerr << "Wystopił błąd podczas wypisywania danych na standardowym wyjsciu" << endl;
-            fin.close();
-            return 1;
-        }
     }
-
     else
     {
-        cerr << "Wystopił błąd podczas wczytywania danych z pliku " << endl;
+        cerr << "Wystopił błąd podczas wypisywania danych na standardowym wyjsciu" << endl;
         fin.close();
         return 1;
     }
+}
+else
+{
+    cerr << "Wystopił błąd podczas wczytywania danych z pliku " << endl;
     fin.close();
-    return 0;
+    return 1;
+}
+fin.close();
+return 0;
 }
