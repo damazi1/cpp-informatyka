@@ -82,33 +82,29 @@ SOsoba SOsoba::wczytaj(ifstream &fin)
         fin >> osoba.id;
         if (sprawdz(fin))
         {
-            czysc(osoba);
-            return osoba;
+            return SOsoba();
         }
         fin >> osoba.email;
         if (sprawdz(fin))
         {
-            czysc(osoba);
-            return osoba;
+            return SOsoba();
         }
         fin >> osoba.rok_urodzenia;
         if (sprawdz(fin))
         {
-            czysc(osoba);
-            return osoba;
+            return SOsoba();
         }
         fin >> osoba.imie;
         return osoba;
     }
-    SOsoba();
-    return osoba;
+    return SOsoba();
 }
 
 bool SOsoba::wypisz(ostream &out)
 {
     if (sprawdz(out))
         return false;
-    if (id)
+    if (id!=0)
     {
         out << id << ' ';
         if (sprawdz(out))
@@ -118,7 +114,7 @@ bool SOsoba::wypisz(ostream &out)
             out << email << ' ';
             if (sprawdz(out))
                 return false;
-            if (rok_urodzenia)
+            if (rok_urodzenia!=0)
             {
                 out << rok_urodzenia << ' ';
                 if (sprawdz(out))
@@ -180,7 +176,7 @@ bool SLista::wczytaj(ifstream &fin)
         fin >> n;
         if (sprawdz(fin))
             return false;
-        if (n > 0)
+        if (n > 0&&n<1000)
         {
             osoba = new SOsoba[n];
 
@@ -188,8 +184,8 @@ bool SLista::wczytaj(ifstream &fin)
             {
                 osoba[i] = osoba[i].wczytaj(fin);
             }
+            return true;
         }
-        return true;
     }
     if (sprawdz(fin))
         return false;
@@ -224,7 +220,6 @@ bool SLista::wypisz(ostream &out)
 
 SOsoba SLista::szukaj(const unsigned int id)
 {
-    SOsoba os
     int m = id;
     for (int i = 0; i < n; i++)
     {
@@ -249,13 +244,13 @@ void SLista::podziel(ofstream &foutM, ofstream &foutK)
         {
             if (sprawdz(foutK))
                 return;
-            osoba[i].wypisz(osoba[i], foutK);
+            osoba[i].wypisz(foutK);
         }
         else
         {
             if (sprawdz(foutM))
                 return;
-            osoba[i].wypisz(osoba[i], foutM);
+            osoba[i].wypisz(foutM);
         }
     }
 }
@@ -308,11 +303,11 @@ int main(int argc, char *argv[])
     }
 
     SLista lista;
-    lista.wczytaj(lista, fin);
-    lista.wypisz(lista);
-    SOsoba osoba = lista.szukaj(lista, atoi(argv[4]));
-    osoba.wypisz(osoba);
-    lista.podziel(lista, foutM, foutK);
+    lista.wczytaj(fin);
+    lista.wypisz();
+    SOsoba osoba = lista.szukaj(atoi(argv[4]));
+    osoba.wypisz();
+    lista.podziel(foutM, foutK);
     foutM.close();
     foutK.close();
     fin.close();
