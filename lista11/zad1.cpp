@@ -97,6 +97,13 @@ SOsoba SOsoba::wczytaj(ifstream &fin)
             return SOsoba();
         }
         fin >> osoba.imie;
+        if (!fin.good())
+        {
+            cerr << "błąd 4" << endl;
+            fin.clear();
+            fin.close();
+            return SOsoba();
+        }
         return osoba;
     }
     return SOsoba();
