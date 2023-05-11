@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/damazi/Documents/GitHub/cpp-informatyka/lista2",
-      "program": "c:/Users/damazi/Documents/GitHub/cpp-informatyka/lista2/build/Debug/outDebug",
+      "cwd": "c:/Users/damazi/Documents/GitHub/cpp-informatyka/lista11",
+      "program": "c:/Users/damazi/Documents/GitHub/cpp-informatyka/lista11/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
