@@ -30,7 +30,7 @@ struct SOsoba
     bool wypisz(ostream &out = cout);
 };
 
-bool sprawdz(ifstream &fin)
+bool sprawdz1(ifstream &fin)
 {
     if (!fin.good())
     {
@@ -45,7 +45,7 @@ bool sprawdz(ofstream &fin)
 {
     if (!fin.good())
     {
-        cerr << "Błąd na strumieniu !!";
+        cerr << "Błąd na strumieniu Wyjściowym!!";
         fin.clear();
         fin.close();
         return 1;
@@ -57,44 +57,40 @@ bool sprawdz(ostream &fin)
 {
     if (!fin.good())
     {
-        cerr << "Błąd na strumieniu !!";
+        cerr << "Błąd na strumieniu konsoli !!";
         fin.clear();
         return 1;
     }
     return 0;
 }
 
-void czysc(SOsoba &osoba)
-{
-    osoba.id = 0;
-    osoba.email = "";
-    osoba.rok_urodzenia = 0;
-    osoba.imie = "";
-}
-
 SOsoba SOsoba::wczytaj(ifstream &fin)
 {
     SOsoba osoba;
-    if (sprawdz(fin))
-        return osoba;
+    if (sprawdz1(fin))
+        return SOsoba();
     if (fin.good())
     {
-        fin >> osoba.id;
-        if (sprawdz(fin))
+        fin >> id;
+        if (sprawdz1(fin))
         {
             return SOsoba();
         }
-        fin >> osoba.email;
-        if (sprawdz(fin))
+        fin >> email;
+        if (sprawdz1(fin))
         {
             return SOsoba();
         }
-        fin >> osoba.rok_urodzenia;
-        if (sprawdz(fin))
+        fin >> rok_urodzenia;
+        if (sprawdz1(fin))
         {
             return SOsoba();
         }
-        fin >> osoba.imie;
+        fin >> imie;
+        if (sprawdz1(fin))
+        {
+            return SOsoba();
+        }
         return osoba;
     }
     return SOsoba();
@@ -104,7 +100,7 @@ bool SOsoba::wypisz(ostream &out)
 {
     if (sprawdz(out))
         return false;
-    if (id!=0)
+    if (id != 0)
     {
         out << id << ' ';
         if (sprawdz(out))
@@ -114,7 +110,7 @@ bool SOsoba::wypisz(ostream &out)
             out << email << ' ';
             if (sprawdz(out))
                 return false;
-            if (rok_urodzenia!=0)
+            if (rok_urodzenia != 0)
             {
                 out << rok_urodzenia << ' ';
                 if (sprawdz(out))
@@ -166,17 +162,17 @@ struct SLista
 
 bool SLista::wczytaj(ifstream &fin)
 { // usun
-    if (sprawdz(fin))
+    if (sprawdz1(fin))
         return false;
     if (fin.good())
     {
         fin >> nazwa;
-        if (sprawdz(fin))
+        if (sprawdz1(fin))
             return false;
         fin >> n;
-        if (sprawdz(fin))
+        if (sprawdz1(fin))
             return false;
-        if (n > 0&&n<1000)
+        if (n > 0 && n < 1000)
         {
             osoba = new SOsoba[n];
 
@@ -187,7 +183,8 @@ bool SLista::wczytaj(ifstream &fin)
             return true;
         }
     }
-    if (sprawdz(fin))
+    SOsoba();
+    if (sprawdz1(fin))
         return false;
     return false;
 }
@@ -201,16 +198,17 @@ bool SLista::wypisz(ostream &out)
         out << nazwa << endl;
         if (sprawdz(out))
             return false;
-        if (n!=0){
-            out<<n<<endl;
-        
-        for (int i = 0; i < n; i++)
+        if (n != 0)
         {
-            if (sprawdz(out))
-                return false;
-            osoba[i].wypisz(out);
-        }
-        return true;
+            out << n << endl;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (sprawdz(out))
+                    return false;
+                osoba[i].wypisz(out);
+            }
+            return true;
         }
     }
     if (sprawdz(out))
