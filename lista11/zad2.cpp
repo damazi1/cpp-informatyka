@@ -60,16 +60,49 @@ struct SLista
     void podziel();
 };
 
-int main()
+int main(int argc, char **argv)
 {
+    if (argc != 5)
+    {
+        cerr << "Błędna ilosc argumentow (5)" << endl;
+        cout << "Poprawny zapis to ./nazwa plik_wejsciowy plik_wyjsicowy_M plik_wyjsciowy_k znak_zodiaku" << endl;
+        return -1;
+    }
     SLista lista;
     ifstream fin;
-    fin.open("in1.txt");
-    if (!lista.wczytaj(fin))
+    fin.open(argv[1]);
+    if (lista.wczytaj(fin))
     {
-        if (!lista.wypisz())
+        if (lista.wypisz())
         {
+            SOsoba osoba = lista.szukaj(argv[4]);
+            if (!osoba.wypisz())
+            {
+                cerr << "Nie ma takiego znaku w pliku" << endl;
+            }
+            ofstream foutM, foutK;
+            foutM.open(argv[2]);
+            foutK.open(argv[3]);
+            lista.podziel(foutM, foutK);
+            foutM.close();
+            foutK.close();
+            lista.podziel();
         }
+
+        else
+        {
+            cerr << "Blad podczas Wypisywania danych z pliku" << endl;
+            fin.clear();
+            fin.close();
+            return 1;
+        }
+    }
+    else
+    {
+        cerr << "Blad podczas wczytywania danych z pliku" << endl;
+        fin.clear();
+        fin.close();
+        return 1;
     }
     fin.close();
 
@@ -141,35 +174,47 @@ bool SOsoba::wypisz(ostream &out)
     }
     if (out.good())
     {
-        out << imie << " ";
-        if (!out.good())
+        if (imie != "")
         {
-            cerr << "błąd na strumieniu wyjscia (wypisz_imie)" << endl;
-            out.clear();
-            return false;
+            out << imie << " ";
+            if (!out.good())
+            {
+                cerr << "błąd na strumieniu wyjscia (wypisz_imie)" << endl;
+                out.clear();
+                return false;
+            }
+            if (rok_urodzenia != 0)
+            {
+                out << rok_urodzenia << " ";
+                if (!out.good())
+                {
+                    cerr << "błąd na strumieniu wyjscia (wypisz_rok)" << endl;
+                    out.clear();
+                    return false;
+                }
+                if (znak_zodiaku != "")
+                {
+                    out << znak_zodiaku << " ";
+                    if (!out.good())
+                    {
+                        cerr << "błąd na strumieniu wyjscia (wypisz_znak)" << endl;
+                        out.clear();
+                        return false;
+                    }
+                    if (szczesliwa_liczba != 0)
+                    {
+                        out << szczesliwa_liczba << endl;
+                        if (!out.good())
+                        {
+                            cerr << "błąd na strumieniu wyjscia (wypisz_liczba)" << endl;
+                            out.clear();
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
         }
-        out << rok_urodzenia << " ";
-        if (!out.good())
-        {
-            cerr << "błąd na strumieniu wyjscia (wypisz_rok)" << endl;
-            out.clear();
-            return false;
-        }
-        out << znak_zodiaku << " ";
-        if (!out.good())
-        {
-            cerr << "błąd na strumieniu wyjscia (wypisz_znak)" << endl;
-            out.clear();
-            return false;
-        }
-        out << szczesliwa_liczba << endl;
-        if (!out.good())
-        {
-            cerr << "błąd na strumieniu wyjscia (wypisz_liczba)" << endl;
-            out.clear();
-            return false;
-        }
-        return true;
     }
     if (!out.good())
     {
@@ -184,7 +229,7 @@ bool SLista::wczytaj(ifstream &fin)
 {
     if (!fin.good())
     {
-        cerr << "Błąd na strumieniu wejścia (wczytaj_li)" << endl;
+        cerr << "Błąd na strumieniu wejścia (wczytaj_li_start)" << endl;
         fin.clear();
         fin.close();
         return false;
@@ -194,7 +239,7 @@ bool SLista::wczytaj(ifstream &fin)
         fin >> nazwa;
         if (!fin.good())
         {
-            cerr << "Błąd na strumieniu wejścia (wczytaj_li)" << endl;
+            cerr << "Błąd na strumieniu wejścia (wczytaj_li_nazwa)" << endl;
             fin.clear();
             fin.close();
             return false;
@@ -202,7 +247,7 @@ bool SLista::wczytaj(ifstream &fin)
         fin >> n;
         if (!fin.good())
         {
-            cerr << "Błąd na strumieniu wejścia (wczytaj_li)" << endl;
+            cerr << "Błąd na strumieniu wejścia (wczytaj_li_n)" << endl;
             fin.clear();
             fin.close();
             return false;
@@ -219,14 +264,7 @@ bool SLista::wczytaj(ifstream &fin)
         {
             if (!osoba[i].wczytaj(fin))
             {
-                cerr << "Błąd na strumieniu wejścia (wczytaj_li)" << endl;
-                fin.clear();
-                fin.close();
-                return false;
-            }
-            if (!fin.good())
-            {
-                cerr << "Błąd na strumieniu wejścia (wczytaj_li)" << endl;
+                cerr << "Błąd na strumieniu wejścia (wczytaj_li_osoba)" << endl;
                 fin.clear();
                 fin.close();
                 return false;
@@ -254,31 +292,37 @@ bool SLista::wypisz(ostream &out)
     }
     if (out.good())
     {
-        out << nazwa << " " << endl;
-        if (!out.good())
+        if (nazwa != "")
         {
-            cerr << "Błąd na strumieniu wyjscia (wypisz_pocz)" << endl;
-            out.clear();
-            return false;
-        }
-        out << n << endl;
-        if (!out.good())
-        {
-            cerr << "Błąd na strumieniu wyjscia (wypisz_pocz)" << endl;
-            out.clear();
-            return false;
-        }
-        for (int i = 0; i < n; i++)
-        {
-            osoba[i].wypisz(out);
+            out << nazwa << " " << endl;
             if (!out.good())
             {
                 cerr << "Błąd na strumieniu wyjscia (wypisz_pocz)" << endl;
                 out.clear();
                 return false;
             }
+            if (n > 0)
+            {
+                out << n << endl;
+                if (!out.good())
+                {
+                    cerr << "Błąd na strumieniu wyjscia (wypisz_pocz)" << endl;
+                    out.clear();
+                    return false;
+                }
+                for (int i = 0; i < n; i++)
+                {
+                    osoba[i].wypisz(out);
+                    if (!out.good())
+                    {
+                        cerr << "Błąd na strumieniu wyjscia (wypisz_pocz)" << endl;
+                        out.clear();
+                        return false;
+                    }
+                }
+                return true;
+            }
         }
-        return true;
     }
     if (!out.good())
     {
@@ -287,4 +331,72 @@ bool SLista::wypisz(ostream &out)
         return false;
     }
     return false;
+}
+
+SOsoba SLista::szukaj(const string str)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (osoba[i].znak_zodiaku == str)
+        {
+            return osoba[i];
+        }
+    }
+    return SOsoba();
+}
+
+void SLista::podziel(ofstream &foutM, ofstream &foutK)
+{
+    if (!foutM.good())
+    {
+        cerr << "blad na strumieniu wyjscia do pliku dla Mężczyzn" << endl;
+        foutM.clear();
+        foutM.close();
+        return;
+    }
+    if (!foutK.good())
+    {
+        cerr << "blad na strumieniu wyjscia do pliku dla Kobiet" << endl;
+        foutK.clear();
+        foutK.close();
+        return;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        int m = size(osoba[i].znak_zodiaku);
+        if (osoba[i].znak_zodiaku[m - 1] == 'a')
+        {
+            osoba[i].wypisz(foutK);
+
+            if (!foutK.good())
+            {
+                cerr << "blad na strumieniu wyjscia do pliku dla Kobiet" << endl;
+                foutK.clear();
+                foutK.close();
+                return;
+            }
+        }
+        else
+        {
+            osoba[i].wypisz(foutM);
+            if (!foutM.good())
+            {
+                cerr << "blad na strumieniu wyjscia do pliku dla Mężczyzn" << endl;
+                foutM.clear();
+                foutM.close();
+                return;
+            }
+        }
+    }
+}
+
+void SLista::podziel()
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (osoba[i].szczesliwa_liczba % 2 == 0)
+        {
+            osoba[i].wypisz();
+        }
+    }
 }

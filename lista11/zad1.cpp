@@ -299,7 +299,7 @@ void SLista::podziel(ofstream &foutM, ofstream &foutK)
         int n = size(osoba[i].imie);
         if (osoba[i].imie[n - 1] == 'a')
         {
-
+            osoba[i].wypisz(foutK);
             if (!foutK.good())
             {
                 cerr << "błąd foutM 1" << endl;
@@ -307,10 +307,11 @@ void SLista::podziel(ofstream &foutM, ofstream &foutK)
                 foutK.close();
                 return;
             }
-            osoba[i].wypisz(foutK);
         }
         else
         {
+
+            osoba[i].wypisz(foutM);
             if (!foutM.good())
             {
                 cerr << "błąd foutM 1" << endl;
@@ -318,7 +319,6 @@ void SLista::podziel(ofstream &foutM, ofstream &foutK)
                 foutM.close();
                 return;
             }
-            osoba[i].wypisz(foutM);
         }
     }
 }
@@ -373,3 +373,4 @@ int main(int argc, char *argv[])
     fin.close();
     return 0;
 }
+
