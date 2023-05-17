@@ -127,8 +127,13 @@ int main()
         {
             konto.dodaj_konto("Piotr Nowak");
             konto.wyswietl_bank();
+            konto.usun_konto("Konto123");
+            konto.wyswietl_bank();
+            // SKonto osoba = *konto.znajdz_konto("Konto456");
+            // osoba.wyswietl_konto(true);
         }
     }
+
     for (int i = 0; i < konto.liczba_klientow; i++)
     {
         if (konto.klient[i].konto.transakcje)
@@ -357,47 +362,162 @@ bool SBank::losuj_nr_konta(string &wygenerowny_numer)
 {
     for (int i = 0; i < 3; i++)
     {
-        wygenerowny_numer += rand() % 10+48;
+        wygenerowny_numer += rand() % 10 + 48;
     }
     return true;
 }
 
 bool SBank::dodaj_konto(const string &nazwa_wlasciciela)
 {
-    SKlient*kl;
-    kl=new SKlient[liczba_klientow];
-    for(int i = 0;i<liczba_klientow;i++){
-        kl[i].imie=klient[i].imie;
-        kl[i].nazwisko=klient[i].nazwisko;
-        kl[i].konto=klient[i].konto;
+    SKlient *kl;
+    kl = new SKlient[liczba_klientow];
+    for (int i = 0; i < liczba_klientow; i++)
+    {
+        kl[i].imie = klient[i].imie;
+        kl[i].nazwisko = klient[i].nazwisko;
+        kl[i].konto = klient[i].konto;
     }
     liczba_klientow++;
-    if(klient){
-        delete [] klient;
+    if (klient)
+    {
+        delete[] klient;
         klient = nullptr;
     }
-    klient = new SKlient [liczba_klientow];
-    for(int i = 0;i<liczba_klientow-1;i++){
-        klient[i].imie=kl[i].imie;
-        klient[i].nazwisko=kl[i].nazwisko;
-        klient[i].konto=kl[i].konto;
+    klient = new SKlient[liczba_klientow];
+    for (int i = 0; i < liczba_klientow - 1; i++)
+    {
+        klient[i].imie = kl[i].imie;
+        klient[i].nazwisko = kl[i].nazwisko;
+        klient[i].konto = kl[i].konto;
     }
     stringstream ss(nazwa_wlasciciela);
     string imie;
     string nazwisko;
-    string numerkonta="konto";
+    string numerkonta = "konto";
     losuj_nr_konta(numerkonta);
-    ss>>imie;
-    ss>>nazwisko;
-    klient[liczba_klientow-1].imie=imie;
-    klient[liczba_klientow-1].nazwisko=nazwisko;
-    klient[liczba_klientow-1].konto.numer_konta=numerkonta;
-    klient[liczba_klientow-1].konto.saldo=0;
-    klient[liczba_klientow-1].konto.liczba_transakcji=0;
-    klient[liczba_klientow-1].konto.transakcje=nullptr;
-    if (kl){
-        delete [] kl;
-        kl=nullptr;
+    ss >> imie;
+    ss >> nazwisko;
+    klient[liczba_klientow - 1].imie = imie;
+    klient[liczba_klientow - 1].nazwisko = nazwisko;
+    klient[liczba_klientow - 1].konto.numer_konta = numerkonta;
+    klient[liczba_klientow - 1].konto.saldo = 0;
+    klient[liczba_klientow - 1].konto.liczba_transakcji = 0;
+    klient[liczba_klientow - 1].konto.transakcje = nullptr;
+    if (kl)
+    {
+        delete[] kl;
+        kl = nullptr;
     }
     return true;
+}
+
+bool SBank::usun_konto(const string &numer_konta)
+{
+    for (int i = 0; i < liczba_klientow; i++)
+    {
+        if (klient[i].konto.numer_konta == numer_konta)
+        {
+            SKonto *konto = new SKonto[liczba_klientow - 1];
+            for (int j = 0, k = 0; j < liczba_klientow - 1; j++)
+            {
+                if (i != k)
+                {
+                    konto[j].numer_konta = klient[k].konto.numer_konta;
+                    konto[j].saldo = klient[k].konto.saldo;
+                    konto[j].liczba_transakcji = klient[k].konto.liczba_transakcji;
+                    if (konto[j].liczba_transakcji > 0)
+                    {
+                        konto[j].transakcje = new STransakcje[konto[j].liczba_transakcji];
+                        for (int m = 0; m < konto[j].liczba_transakcji; m++)
+                        {
+                            konto[j].transakcje[m].kwota = klient[k].konto.transakcje[m].kwota;
+                            konto[j].transakcje[m].opis_t = klient[k].konto.transakcje[m].opis_t;
+                        }
+                        k++;
+                    }
+                    else if (konto[j].liczba_transakcji == 0)
+                    {
+                        konto[j].transakcje = nullptr;
+                        k++;
+                    }
+                    else
+                    {
+                        cerr << "Konto zawiera niepoprawną ilość transakcji " << endl;
+                        return false;
+                    }
+                }
+                else
+                {
+                    k++;
+                    j--;
+                }
+            }
+            for (int j = 0; j < liczba_klientow; j++)
+            {
+                if (klient[j].konto.transakcje)
+                {
+                    delete[] klient[j].konto.transakcje;
+                    klient[j].konto.transakcje = nullptr;
+                }
+            }
+            if (klient)
+            {
+                delete[] klient;
+                klient = nullptr;
+            }
+            liczba_klientow--;
+            klient = new SKlient[liczba_klientow];
+            for (int j = 0; j < liczba_klientow; j++)
+            {
+                klient[j].konto.numer_konta = konto[j].numer_konta;
+                klient[j].konto.saldo = konto[j].saldo;
+                klient[j].konto.liczba_transakcji = konto[j].liczba_transakcji;
+                klient[j].konto.transakcje = new STransakcje[klient[j].konto.liczba_transakcji];
+                for (int m = 0; m < klient[j].konto.liczba_transakcji; m++)
+                {
+                    klient[j].konto.transakcje[m].kwota = konto[j].transakcje[m].kwota;
+                    klient[j].konto.transakcje[m].opis_t = konto[j].transakcje[m].opis_t;
+                }
+            }
+            for (int j = 0; j < konto[j].liczba_transakcji; j++)
+            {
+                if (konto[j].transakcje)
+                {
+                    delete[] konto[j].transakcje;
+                    konto[j].transakcje = nullptr;
+                }
+            }
+            if (konto)
+            {
+                delete[] konto;
+                konto = nullptr;
+            }
+            return true;
+        }
+        cout << "Takie konto nie istnieje" << endl;
+        return false;
+    }
+    cout << "Nie ma konta z podanym adresem" << endl;
+    return false;
+}
+
+SKonto *SBank::znajdz_konto(const string &numer_konta)
+{
+    SKonto kont;
+    for (int i = 0; i < liczba_klientow; i++)
+    {
+        if (klient[i].konto.numer_konta == numer_konta)
+        { 
+            kont.numer_konta=klient[i].konto.numer_konta;
+            kont.saldo=klient[i].konto.saldo;
+            kont.liczba_transakcji=klient[i].konto.liczba_transakcji;
+            kont.transakcje=new STransakcje[kont.liczba_transakcji];
+            for(int j=0;j<kont.liczba_transakcji;j++){
+                kont.transakcje[j].kwota=klient[i].konto.transakcje[j].kwota;
+                kont.transakcje[j].opis_t=klient[i].konto.transakcje[j].opis_t;
+            }
+            return &klient[i].konto;
+        }
+    }
+    return nullptr;
 }
