@@ -1,0 +1,13 @@
+MojBankSA
+3
+Jan Kowalski
+Konto123 5000 2
+1000 Wypłata
+1500 Wpłata
+Anna Nowak
+Konto456 3000 3
+500 Wpłata
+800 Wpłata
+1200 Wypłata
+Adam Nowicki
+Konto789 2000 0 
