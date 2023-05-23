@@ -108,6 +108,23 @@ struct SBank
     SKonto *znajdz_konto(const string &numer_konta);
 };
 
+bool porownaj(const SKlient &a, const SKlient &b)
+{
+    if (a.nazwisko[0] == b.nazwisko[0])
+    {
+        if (a.imie == b.imie)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void sortuj(SKlient *klient, unsigned int liczba_klientow, bool (*porownaj)(const SKlient &, const SKlient &))
+{
+    
+}
+
 int main()
 {
     srand(time(NULL));
@@ -507,14 +524,15 @@ SKonto *SBank::znajdz_konto(const string &numer_konta)
     for (int i = 0; i < liczba_klientow; i++)
     {
         if (klient[i].konto.numer_konta == numer_konta)
-        { 
-            kont.numer_konta=klient[i].konto.numer_konta;
-            kont.saldo=klient[i].konto.saldo;
-            kont.liczba_transakcji=klient[i].konto.liczba_transakcji;
-            kont.transakcje=new STransakcje[kont.liczba_transakcji];
-            for(int j=0;j<kont.liczba_transakcji;j++){
-                kont.transakcje[j].kwota=klient[i].konto.transakcje[j].kwota;
-                kont.transakcje[j].opis_t=klient[i].konto.transakcje[j].opis_t;
+        {
+            kont.numer_konta = klient[i].konto.numer_konta;
+            kont.saldo = klient[i].konto.saldo;
+            kont.liczba_transakcji = klient[i].konto.liczba_transakcji;
+            kont.transakcje = new STransakcje[kont.liczba_transakcji];
+            for (int j = 0; j < kont.liczba_transakcji; j++)
+            {
+                kont.transakcje[j].kwota = klient[i].konto.transakcje[j].kwota;
+                kont.transakcje[j].opis_t = klient[i].konto.transakcje[j].opis_t;
             }
             return &klient[i].konto;
         }
