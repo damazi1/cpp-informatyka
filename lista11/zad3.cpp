@@ -59,6 +59,7 @@ struct SLista
     bool wypisz(ostream &out = cout);
     double srednia();
     SStudent maksymalna();
+    SStudent szukaj(string);
 };
 
 int main(int argc,char **argv)
@@ -79,6 +80,11 @@ int main(int argc,char **argv)
             SStudent student = lista.maksymalna();
             cout << "Student z najwieksza iloscia niezaliczonych przedmiotow to : " << endl;
             if(!student.wypisz()){
+                cerr<<"Błąd podczas wypisywania z pliku dla studenta "<<endl;
+            }
+
+            SStudent student1 = lista.szukaj("Jan");
+            if(!student1.wypisz()){
                 cerr<<"Błąd podczas wypisywania z pliku dla studenta "<<endl;
             }
         }
@@ -360,10 +366,29 @@ SStudent SLista::maksymalna()
     pn.imie = student[stu].imie;
     pn.nazwisko = student[stu].nazwisko;
     pn.n = student[stu].n;
-    pn.wykaz_niezaliczonych_k = new string[student[stu].n];
+    pn.wykaz_niezaliczonych_k = new string[pn.n];
     for (int i = 0; i < pn.n; i++)
     {
         pn.wykaz_niezaliczonych_k[i] = student[stu].wykaz_niezaliczonych_k[i];
+    }
+    return pn;
+}
+
+SStudent SLista::szukaj (string imie){
+    int m=0;
+    for(int i=0;i<n;i++){
+        if(student[i].imie==imie){
+            m=i;
+            break;
+        }
+    }
+    SStudent pn;
+    pn.imie=student[m].imie;
+    pn.nazwisko=student[m].nazwisko;
+    pn.n=student[m].n;
+    pn.wykaz_niezaliczonych_k=new string [pn.n];
+    for (int i=0;i<pn.n;i++){
+        pn.wykaz_niezaliczonych_k[i]=student[m].wykaz_niezaliczonych_k[i];
     }
     return pn;
 }
