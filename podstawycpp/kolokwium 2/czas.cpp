@@ -25,5 +25,10 @@ int main(){
     srand(time(NULL));
     time_t czas1=ustaw();
     cout<<"Liczba dni między datami "<<setw(10)<<setfill('X')<<porownaj(czas1);
+    string liczba;
+    for (int i=0;i<3;i++){
+    liczba+=to_string(rand()%10);
+    }
+    cout<<"\n"<<liczba<<endl;
     return 0;
 }
