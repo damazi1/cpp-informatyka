@@ -82,9 +82,9 @@ int dzialanie(int a,int b,char oper){
 
 int obliczRPN(const char* wyrazenie){
     SStos stos;
+    string wyr=wyrazenie;
     int n=strlen(wyrazenie);
     zainicjalizuj(stos,n);
-    const_cast<char*>(wyrazenie);
     int temp=0;
     for (int i=0;i<n;i++){
         if(wyrazenie[i]>='0' && wyrazenie[i]<='9'){
