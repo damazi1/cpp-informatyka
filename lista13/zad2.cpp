@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <sstream>
 using namespace std;
 
 struct SStos
@@ -80,30 +81,57 @@ int dzialanie(int a,int b,char oper){
     return 0;
 }
 
+bool czy_cyfra(char znak){
+	return znak >= '0' && znak <= '9';
+}
+bool czy_oper(char znak){
+	return znak == '+' || znak == '-' || znak == '*' || znak == '/'; 
+}
+
+int str_to_int(string a, int &poz) 
+{
+	int liczba = 0;
+	while(poz < a.size() && czy_cyfra(a[poz]))
+	{
+		//schemat Hornera
+		liczba = liczba * 10 + a[poz] - '0';
+		++poz;
+	}
+	--poz;
+	return liczba;
+}
+
 int obliczRPN(const char* wyrazenie){
     SStos stos;
-    string wyr=wyrazenie;
     int n=strlen(wyrazenie);
     zainicjalizuj(stos,n);
-    int temp=0;
+    int wartosc=0;
+    int a,b,temp=0;
     for (int i=0;i<n;i++){
-        if(wyrazenie[i]>='0' && wyrazenie[i]<='9'){
+        if(czy_cyfra(wyrazenie[i])){
             stos.indeks++;
-            stos.dane[stos.indeks]=(wyrazenie[i]);
+            dodaj(stos,str_to_int(wyrazenie,i));
         }
-        if( wyrazenie[i] == '+' || wyrazenie[i] == '-' || wyrazenie[i] == '*' || wyrazenie[i]== '/'){
-            temp=dzialanie(stos.dane[stos.indeks-1],stos.dane[stos.indeks],wyrazenie[i]);
-            stos.dane[stos.indeks]=0;
-            stos.indeks--;
-            stos.dane[stos.indeks]=temp;
+        else{
+            if(czy_oper(wyrazenie[i])){
+                if(sizeof(stos.dane)<2){
+                    cerr<<"Niepoprawna ilosć wyrażen";
+                    return 1;
+                }
+                a=stos.dane[stos.indeks];
+                usun(stos,temp);
+                b=stos.dane[stos.indeks];
+                usun(stos,temp);
+                dodaj(stos,dzialanie(a,b,wyrazenie[i]));
+            }
         }
     }
-    zniszcz(stos);
-    return stos.dane[stos.indeks];
+    wartosc=stos.dane[stos.indeks];
+    return wartosc;
 }
 
 int main()
 {
-    obliczRPN("47-");
+    cout<<obliczRPN("47-")<<endl;
     return 0;
 }
