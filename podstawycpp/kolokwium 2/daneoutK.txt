@@ -1,0 +1,3 @@
+Ala	2012	Koziorozec	8
+Ola	2004	Ryby	11
+Zosia	1999	Baran	4
