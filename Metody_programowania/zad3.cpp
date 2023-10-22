@@ -44,13 +44,23 @@ class wielobok
     punkt *wsk;
 
 public:
-    wielobok() : roz(0), wsk(0) {}
+    wielobok() : roz(0), wsk(nullptr) {}
     wielobok(const punkt *b, const punkt *e) : roz(e - b > 0 ? e - b : 0), wsk(roz ? new punkt[roz] : 0)
     {
-        for (int i = 0; i < roz; i++)
+        for (size_t i = 0; i < roz; i++)
         {
             wsk[i] = b[i];
         }
+    }
+
+    wielobok &operator=(const wielobok &r)
+    {
+        if (this != &r)
+        {
+            roz=r.roz;
+            *wsk=*r.wsk;
+        }
+        return *this;
     }
 
     ~wielobok()
@@ -61,28 +71,23 @@ public:
             wsk = nullptr;
         }
     }
+
     punkt &operator[](size_t i)
     {
         return wsk[i];
-    }
-    wielobok &operator=(const wielobok&r){
-        if(this!=&r){
-            roz=r.roz;
-            for(int i=0;i<roz;i++){
-            wsk[i]=r.wsk[i];
-            }
-        }
-        return *this;
     }
 
     double obwod()
     {
         double wynik = 0;
-        for (int i = 0; i < roz - 1; i++)
+        if (wsk)
         {
-            wynik += wsk[i].odleglosc(wsk[i + 1]);
+            for (size_t i = 0; i < roz - 1; i++)
+            {
+                wynik += wsk[i].odleglosc(wsk[i + 1]);
+            }
+            wynik += wsk[roz - 1].odleglosc(wsk[0]);
         }
-        wynik += wsk[roz - 1].odleglosc(wsk[0]);
         return wynik;
     }
 };
@@ -111,8 +116,8 @@ int main()
     cout << w1.obwod() << '\n';
     cout << "***\n\n";
 
-    wielobok w2;
-    w2 = wielobok(t, t + 3);
+    wielobok w2(t, t + 3);
+    // w2 = wielobok(t, t+3);
     cout << w2.obwod() << '\n';
     return 0;
 }
