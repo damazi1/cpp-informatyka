@@ -20,7 +20,8 @@ public:
 
 	ostream &view(ostream &out) const
 	{
-		return out << miasto << ", " << ulica << ", " << nr << '\n';
+		out << miasto << ", " << ulica << ", " << nr << '\n';
+		return out;
 	}
 
 	string &miasto1()
@@ -42,13 +43,15 @@ class osoba
 	adres *adr;
 
 public:
-	osoba()
-	{
-		im = "";
-		wi = 0;
-		adr = new adres;
-	}
-	osoba(const string &a1, int a2, const adres &a3) : im(a1), wi(a2), adr(new adres(a3)) {}
+	// osoba()
+	// {
+	// 	im = "";
+	// 	wi = 0;
+	// 	adr = new adres;
+	// }
+	// osoba(const string &a1, int a2, const adres &a3) : im(a1), wi(a2), adr(new adres(a3)) {}
+
+	osoba(const string &imie = "",int wiek=0, const adres &ad = adres()) : im(imie),wi(wiek), adr(new adres(ad)) {}
 
 	osoba(const osoba &a1) : im(a1.im), wi(a1.wi), adr(new adres(*a1.adr)) {}
 

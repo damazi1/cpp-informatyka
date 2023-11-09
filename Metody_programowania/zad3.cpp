@@ -12,7 +12,7 @@ class punkt
 
 public:
     punkt() : x_(0), y_(0) {}
-    punkt(double a1, double a2) : x_(a1), y_(a2) {}
+    punkt(const double a1, const double a2) : x_(a1), y_(a2) {}
 
     double &x() { return x_; }
     double &y() { return y_; }
