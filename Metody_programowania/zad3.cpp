@@ -44,8 +44,8 @@ class wielobok
     punkt *wsk;
 
 public:
-    wielobok() : roz(0), wsk(nullptr) {}
-    wielobok(const punkt *b, const punkt *e) : roz(e - b > 0 ? e - b : 0), wsk(roz ? new punkt[roz] : 0)
+    
+    wielobok(const punkt *b=nullptr, const punkt *e=nullptr) : roz(e - b > 0 ? e - b : 0), wsk(roz ? new punkt[roz] : 0)
     {
         for (size_t i = 0; i < roz; i++)
         {
@@ -90,11 +90,21 @@ public:
         }
         return wynik;
     }
+    ostream &view(ostream &out)const{
+        out<<roz<<endl;
+        for (size_t i=0;i<roz;i++){
+            wsk[i].view(out);
+        }
+        return out;
+    }
+    friend ostream &operator<<(ostream& out,const wielobok& r);
 };
+ostream &operator<<(ostream& out,const wielobok& r){
+    return r.view(out);
+}
 
 int main()
 {
-
     punkt p(2, 3);
     cout << p.x() << ' ' << p.y() << '\n';
     p.x() = 1;
@@ -119,5 +129,9 @@ int main()
     wielobok w2(t, t + 3);
     // w2 = wielobok(t, t+3);
     cout << w2.obwod() << '\n';
+
+    wielobok w3;
+    cout<<"\n******\n"<<w1<<w2<<w3<<endl;
+
     return 0;
 }

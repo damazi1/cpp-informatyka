@@ -79,7 +79,9 @@ public:
 
 	ostream &view(ostream &out) const
 	{
-		return out << im << ", " << wi << ", " << *adr << '\n';
+		out << im << ", " << wi << " , ";
+		adr->view(out);
+		return out;
 	}
 
 	friend ostream &operator<<(ostream &out, const osoba &r);
