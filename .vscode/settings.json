@@ -12,7 +12,8 @@
     "string_view": "cpp",
     "initializer_list": "cpp",
     "utility": "cpp",
-    "iomanip": "cpp"
+    "iomanip": "cpp",
+    "string": "cpp"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
