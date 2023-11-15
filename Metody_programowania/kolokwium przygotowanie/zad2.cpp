@@ -20,6 +20,8 @@ public:
         return 1;
     }
 
+    string &miastoo(){return miasto;}
+
     ostream &view(ostream &out) const
     {
         return out << miasto << " " << ulica << " " << nr_domu << endl;
@@ -29,6 +31,41 @@ public:
 
 ostream &operator<<(ostream &out, const adres &r)
 {
+    return r.view(out);
+}
+
+class osoba{
+    string imie;
+    int wiek;
+    adres *adr;
+
+public:
+    osoba(const string& i="brak",const int &w=0,const adres &a=adres()):imie(i),wiek(w),adr(new adres(a)){}
+    osoba(const osoba& o){
+        imie=o.imie;
+        wiek=o.wiek;
+        adr=new adres(*o.adr);
+    }
+    ~osoba(){delete adr;}
+    
+    osoba &operator=(const osoba &o){
+        imie=o.imie;
+        wiek=o.wiek;
+        *adr=*o.adr;
+        return *this;
+    }
+
+    string& miasto(){return adr->miastoo();}
+    ostream &view(ostream& out)const{
+        out<<imie<<" "<<wiek<<" ";
+        adr->view(out);
+        return out;
+    }
+    friend ostream &operator<<(ostream& out,const osoba& r);
+
+};
+
+ostream &operator<<(ostream& out,const osoba& r){
     return r.view(out);
 }
 
@@ -51,7 +88,6 @@ try
 
         if (a1.wczytaj(file))
         {
-            cout << a1;
             fout << a1;
         }
 
@@ -74,7 +110,17 @@ try
     cout<<a3<<endl;
     a3=a2;
     cout<<a3<<endl;
+    osoba os1("Ala",25,*wsk1);
     delete wsk1;
+    cout<<os1;
+    osoba os2(os1);
+    os1.miasto()="Zmienione miasto";
+    cout<<os2<<os1;
+    osoba os3;
+    cout<<os3;
+    os3=os2;
+    os1.miasto()="Druga zmiana miasta 1 os";
+    cout<<os1<<os3;
     return 0;
 }
 catch (int err)
