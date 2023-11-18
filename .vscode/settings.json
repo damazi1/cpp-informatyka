@@ -13,7 +13,8 @@
     "initializer_list": "cpp",
     "utility": "cpp",
     "iomanip": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "cstring": "cpp"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
