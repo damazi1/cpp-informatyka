@@ -1,65 +1,175 @@
 #include <iostream>
+#include <fstream>
+#include <cstring>
 
 using namespace std;
 
-class kuku1
+class K1
 {
-    double x_, y_, z_;
+    string *p1;
 
 public:
-    kuku1(const double x = 0, const double y = 0, const double z = 0) : x_(x), y_(y), z_(z) {}
-
-    ostream &view(ostream &out) const
+    K1() : p1(nullptr) {}
+    K1(const string &a, const string &b)
     {
-        out << x_ << " , " << y_ << " , " << z_ << endl;
-        return out;
+        p1 = new string[2];
+        p1[0] = a;
+        p1[1] = b;
     }
-    friend ostream &operator<<(ostream &out, const kuku1 &r);
-};
-
-ostream &operator<<(ostream &out, const kuku1 &r)
-{
-    return r.view(out);
-}
-
-class kuku2
-{
-    string nazwa;
-    kuku1 *wsk;
-
-public:
-    kuku2(const string &b = "", const kuku1 &wsk1 = kuku1()) : nazwa(b), wsk(new kuku1(wsk1)) {}
-    ~kuku2()
+    K1(const K1 &k)
     {
-        if (wsk)
-        {
-            delete wsk;
-            wsk = nullptr;
+        p1 = new string[2];
+        p1[0] = k.p1[0];
+        p1[1] = k.p1[1];
+    }
+    K1 operator=(const K1 &w)
+    {
+        p1 = new string[2];
+        p1[0] = w.p1[0];
+        p1[1] = w.p1[1];
+        return *this;
+    }
+    ~K1() { delete[] p1; }
+
+    void dodaj(const string &tekst,size_t i){
+        if(p1&&i<2){
+            p1[i]+=tekst;
         }
     }
 
     ostream &view(ostream &out) const
     {
-        out << nazwa << endl;
-        wsk->view(out);
+        if (p1)
+        {
+            out << p1[0] << " " << p1[1] << endl;
+        }
         return out;
     }
-    friend ostream &operator<<(ostream &out, const kuku2 &r);
+
+    friend ostream &operator<<(ostream &, const K1 &);
 };
 
-ostream &operator<<(ostream &out, const kuku2 &r)
+ostream &operator<<(ostream &out, const K1 &r)
 {
     return r.view(out);
 }
 
-int main()
+class K2
 {
-    kuku1 k1, k2(1, 2, 3);
-    cout << k1 << k2 << endl;
+    K1 w1;
+    double w2;
 
-    kuku2 kk1;
-    kuku2 kk2("siema", k2);
+public:
+    K2() : w2(0.0) {}
+    K2(const string &a, const string &b, const double &l) : w1(K1(a, b)), w2(l) {}
 
-    cout << kk1 << kk2 << endl;
+    K2 operator=(const K2 &k)
+    {
+        w1 = k.w1;
+        w2 = k.w2;
+        return *this;
+    }
+
+    K2 operator-(const double &l)
+    {
+        w2 -= l;
+        return *this;
+    }
+
+    double operator+=(const double &l)
+    {
+        w2+=l;
+        return w2;
+    }
+    
+    ostream &view(ostream &out) const
+    {
+        w1.view(out);
+        out << w2 << endl;
+        return out;
+    }
+    friend ostream &operator<<(ostream &, const K2 &);
+};
+
+ostream &operator<<(ostream &out, const K2 &r)
+{
+    return r.view(out);
+}
+
+int main(int argc, char *argv[])
+try
+{
+    if (argc != 2)
+        throw int(0);
+    if (string(argv[1] + strlen(argv[1]) - 3) != "txt")
+        throw int(1);
+
+    K2 ob1, ob2;
+    const K2 *wsk1 = new K2("kawa", " z mlekiem", 4.50);
+    const K2 ob3(*wsk1);
+    cout << *wsk1;
+    delete wsk1;
+    wsk1 = nullptr;
+
+    const K2 *wsk2 = new K2(ob3);
+    ob2 = *wsk2;
+    cout << ob1 << *wsk2;
+
+    delete wsk2;
+    wsk2 = nullptr;
+    cout << ob2;
+    cout << ob2 - 1.25;
+    cout << "*****3*****\n"
+         << endl;
+
+    K2 tab[4];
+    ifstream fin(argv[1]);
+    if (!fin)
+        throw int(2);
+    {
+        for (size_t i = 0; i < 4; i++)
+        {
+            string a, b;
+            double c;
+            fin >> a;
+            fin >> b;
+            fin >> c;
+            tab[i] = K2(a, b, c);
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+            tab[i] += 1;
+            cout << tab[i];
+        }
+        fin.close();
+    }
+
+    cout << "*****4*****\n"<<endl;
+
+    // tab[1]
+
+    for(int i=0;i<4;i++){
+        cout<<tab[i];
+    }
+
     return 0;
+}
+catch (int err)
+{
+    switch (err)
+    {
+    case 0:
+        cout << err << "blad 1" << endl;
+        break;
+    case 1:
+        cout << err << "blad 2" << endl;
+        break;
+    case 2:
+        cout << err << "blad 3" << endl;
+        break;
+    }
+}
+catch (...)
+{
+    cout << "Nieznany blad" << endl;
 }

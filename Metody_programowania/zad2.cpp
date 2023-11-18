@@ -55,7 +55,7 @@ public:
 
 	osoba(const osoba &a1) : im(a1.im), wi(a1.wi), adr(new adres(*a1.adr)) {}
 
-	osoba &operator=(const osoba &a1)
+	osoba operator=(const osoba &a1)
 	{
 		if (this != &a1)
 		{
