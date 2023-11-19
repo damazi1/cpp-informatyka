@@ -5,7 +5,7 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": [],
+      "args": ["data.txt"],
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/damazi/Documents/GitHub/cpp-informatyka",

@@ -24,6 +24,11 @@ public:
     }
     K1 operator=(const K1 &w)
     {
+        if (p1)
+        {
+            delete[] p1;
+            p1 = nullptr;
+        }
         p1 = new string[2];
         p1[0] = w.p1[0];
         p1[1] = w.p1[1];
@@ -31,10 +36,16 @@ public:
     }
     ~K1() { delete[] p1; }
 
-    void dodaj(const string &tekst,size_t i){
-        if(p1&&i<2){
-            p1[i]+=tekst;
-        }
+    K1 dodaj(K1 &p, const string &r)
+    {
+        p.p1[1] += r;
+        return p;
+    }
+
+    K1 dodaj1(K1 &p, const string &r)
+    {
+        p.p1[0]=r+p.p1[0] ;
+        return p;
     }
 
     ostream &view(ostream &out) const
@@ -78,10 +89,20 @@ public:
 
     double operator+=(const double &l)
     {
-        w2+=l;
+        w2 += l;
         return w2;
     }
-    
+
+    K2 operator+(const string &r)
+    {
+        w1.dodaj(w1, r);
+        return *this;
+    }
+    friend K2 operator+(const string& r,K2 &k){
+        k.w1.dodaj1(k.w1,r);
+        return k;
+    }
+
     ostream &view(ostream &out) const
     {
         w1.view(out);
@@ -144,13 +165,18 @@ try
         fin.close();
     }
 
-    cout << "*****4*****\n"<<endl;
+    cout << "*****4*****\n"
+         << endl;
 
-    // tab[1]
+    tab[1] = tab[1] + " with sugar";
+    tab[3] = "hot " + tab[3];
 
-    for(int i=0;i<4;i++){
-        cout<<tab[i];
+    for (int i = 0; i < 4; i++)
+    {
+        cout << tab[i];
     }
+
+    cout << "*****5*****\n";
 
     return 0;
 }
