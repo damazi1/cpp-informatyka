@@ -23,7 +23,10 @@ public:
 
 	~point() {}
 
-	double operator[](size_t i) const { return tab[i]; }
+	const double &operator[](size_t i) const { return tab[i]; }
+	
+	double &operator[](size_t i) { return tab[i]; }
+	
 
 	double distance(const point &pa) const
 	{
@@ -53,7 +56,8 @@ public:
 
 	bool mniejsze(const point &pa) const
 	{
-		if (this->distance(pa) >= 1e-10)
+		double dane=abs(point().distance(pa)-point().distance(*this));
+		if (dane >= 1e-10)
 		{
 			return 1;
 		}
@@ -67,7 +71,8 @@ public:
 
 	bool rowne(const point &pa) const
 	{
-		if (this->distance(pa) < 1e-10)
+		double dane=abs(point().distance(pa)-point().distance(*this));
+		if (dane < 1e-10)
 		{
 			return 1;
 		}
@@ -81,14 +86,13 @@ public:
 
 	friend istream &operator>>(istream &in,point &r)
 	{
-		double a = 0, b = 0, c = 0;
 		cout << "Podaj a : ";
-		in >> a;
+		in >> r[0];
 		cout << "\nPodaj b : ";
-		in >> b;
+		in >> r[1];
 		cout << "\nPodaj c : ";
-		in >> c;
-		r = point(a,b,c);
+		in >> r[2];
+
 		return in;
 	}
 
@@ -126,7 +130,7 @@ int main()
 	cout << p2 * 3.14 << endl;
 
 	cout << (p1 < p3) << endl;
-	cout << (p1 == point(1.0, 1.0, 1.0)) << endl;
+	cout << (p1 == point(-1.0, -1.0, 1.0)) << endl;
 
 	cin>>p1;
   	cout << p1 << '\n';
