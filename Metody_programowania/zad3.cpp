@@ -40,6 +40,7 @@ ostream &operator<<(ostream &out, const punkt &r)
 
 class wielobok
 {
+private:
     size_t roz;
     punkt *wsk;
 

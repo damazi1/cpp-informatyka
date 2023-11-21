@@ -9,7 +9,7 @@ class punkt
 
 public:
     punkt(const double x = 0, const double y = 0, const double z = 0) : x_(x), y_(y), z_(z) {}
-
+    punkt(const punkt&p):x_(p.x()),y_(p.y()),z_(p.z()){}
     ostream &view(ostream &out) const
     {
         out << x_ << " , " << y_ << " , " << z_ << endl;
@@ -17,6 +17,8 @@ public:
     }
 
     double x() const { return x_; }
+    double y() const { return y_; }
+    double z() const { return z_; }
     double &x() { return x_; }
     friend ostream &operator<<(ostream &out, const punkt &r);
 };
@@ -33,7 +35,18 @@ class prostokat
 
 public:
     prostokat(const double x = 0, const double y = 0, const double z = 0, const double a = 0, const double b = 0) : p_(new punkt(punkt(x, y, z))), a_(a), b_(b) {}
-    prostokat(const punkt &p, const double a = 0, const double b = 0) : p_(new punkt(p)), a_(a), b_(b) {}
+    prostokat(const punkt &p, const double a = 0, const double b = 0){
+        punkt p1(p);
+        p_=new punkt(p1);
+        a_=a;
+        b_=b;
+    }
+    prostokat(const prostokat& p){
+        punkt p1(p.p());
+        p_=new punkt(p1);
+        a_=p.a();
+        b_=p.b();
+    }
 
      prostokat &operator=(const prostokat &other)
     {
@@ -47,13 +60,14 @@ public:
         return *this;
     }
 
-    ~prostokat() { delete p_; }
+    ~prostokat() { delete p_; p_=nullptr;}
 
     double pole() const
     {
         return a_ * b_;
     }
 
+    punkt p() const {return *p_;}
     double a() const { return a_; }
     double b() const { return b_; }
    
@@ -78,8 +92,16 @@ class graniastoslup
 
 public:
     graniastoslup(const double x = 0, const double y = 0, const double z = 0, const double a = 0, const double b = 0, const double h = 0) : p_(new prostokat(punkt(x, y, z), a, b)), h_(h) {}
-    graniastoslup(const punkt &p, const double a = 0, const double b = 0, const double h = 0) : p_(new prostokat(p, a, b)), h_(h) {}
-    graniastoslup(const prostokat &p, const double h = 0) : p_(new prostokat(p)), h_(h) {}
+    graniastoslup(const punkt &p, const double a = 0, const double b = 0, const double h = 0){
+        punkt p1(p);
+        p_=new prostokat(p1,a,b);
+        h_=h;
+    }
+    graniastoslup(const prostokat &p, const double h = 0){
+        prostokat p1(p);
+        p_=new prostokat(p1);
+        h_=h;
+    }
 
     graniastoslup &operator=(const graniastoslup &other)
     {
@@ -92,7 +114,7 @@ public:
         return *this;
     }
 
-    ~graniastoslup() { delete p_; }
+    ~graniastoslup() { delete p_; p_=nullptr;}
 
     double objetosc() const { return p_->a() * p_->b() * h_; }
 
