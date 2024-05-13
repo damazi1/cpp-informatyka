@@ -1,0 +1,63 @@
+-- Podaj nazwiska pracowników, ich płacę, oraz ile wynosi różnica między ich płacą a najwyższą płacą w firmie.
+-- select last_name,salary,(Select max(salary) from employees)-salary roznica from employees
+-- Podaj nazwiska pracowników, ich płacę a obok średnią płacę w ich działach.
+-- Select last_name,salary ,srednia
+-- from
+-- (Select department_id,round(avg(salary)) srednia from employees
+-- group by department_id) natural join employees;
+-- Podaj nazwisko pracownika, który został zatrudniony jako ostatni.
+-- select last_name from employees
+    -- where hire_date=(select max(hire_date)from employees);
+-- Podaj nazwiska, stanowiska i płace pracowników, którzy zarabiają poniżej średniej w firmie.
+-- select last_name,job_id,salary from employees join jobs using (job_id)
+--     where salary<(select avg(salary) from employees);
+-- Wyświetl nazwiska, datę zatrudnienia oraz numery działów pracowników najdłużej pracujących w każdym dziale. Wynik uporządkuj według numerów działów.
+-- select last_name, hire_date, e.department_id,najstarszy from
+--     (select min(hire_date) najstarszy,department_id from employees
+-- 	group by department_id) d join employees e ON(d.department_id=e.department_id AND e.hire_date=d.najstarszy)
+-- order by 3;
+
+-- select last_name, hire_date, department_id
+--     from employees
+--     where (department_id,hire_date) IN (select department_id, min(hire_date) from employees
+-- 	group by department_id)
+-- order by 3;
+
+-- Podaj nazwiska i płacę pracowników, którzy zarabiają więcej niż którykolwiek pracownik z działu 30.
+-- select last_name, salary from employees
+--     where salary>
+--  any (select salary from employees
+--     where department_id=30);
+-- Podaj nazwiska i płacę pracowników, którzy zarabiają więcej niż wszyscy pracownicy z działu 30.
+-- select last_name, salary from employees
+--     where salary>
+--  all (select salary from employees
+--     where department_id=30);
+-- Wyświetl dane kolegów z działu pracownika numer 102.
+-- select last_name from employees
+--     where (department_id)=
+-- 	(select department_id from employees
+-- 		where employee_id=102);
+-- W którym roku zatrudniono największą liczbę pracowników.
+-- select Extract(YEAR from hire_date),count(employee_id) from employees
+--      group by (Extract(YEAR from hire_date))
+--     	having count(employee_id)=
+-- (select max(count(employee_id)) from employees
+--     group by (Extract(YEAR from hire_date)));
+-- Od jakiej litery najczęściej rozpoczynają się imiona pracowników?
+--!!??!!
+-- (select max(count(employee_id)) from employees;
+-- group by substr(last_name,1,1));
+-- Podaj identyfikator i nazwę działu, który wydaje najwięcej na płace.
+-- Ile lat minęło między zatrudnieniem pierwszego i ostatniego pracownika. Podaj ich nazwiska.
+-- select last_name , round(((select max(hire_date)from employees)-(select min(hire_date)from employees))/365) lata from employees
+-- where hire_date= (select max(hire_date)from employees) or
+--     hire_date= (select min(hire_date)from employees);
+-- Podzapytania skorelowane:
+--       13. Wypisz nazwę działu i średnią płacę dla jego pracowników.
+-- select department_name, (select round(avg(salary)) from employees where department_id=d.department_id) srednia from departments d;
+--       14. Podaj identyfikator i nazwę działu, który nie zatrudnia pracowników. (operator EXISTS)
+select department_id , department_name from departments d
+where not exists(select* from employees where department_id=d.department_id);
+--       15. Podaj nazwiska podwładnych a obok nazwiska ich szefów.
+--       16. Wypisz imiona pracowników, które się powtarzają.
