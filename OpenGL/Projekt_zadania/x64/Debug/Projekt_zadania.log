@@ -1,0 +1,32 @@
+﻿  main.cpp
+C:\student\Dz_P\Projekt_zadania\main.cpp(22,15): warning C4101: "pom2": lokalna zmienna, do której nie istnieje odwołanie
+C:\student\Dz_P\Projekt_zadania\main.cpp(63,67): warning C4305: "inicjowanie": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(64,67): warning C4305: "inicjowanie": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(65,68): warning C4305: "inicjowanie": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(66,43): warning C4305: "inicjowanie": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(89,71): warning C4305: "+=": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(114,71): warning C4305: "+=": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(207,64): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(207,48): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(207,32): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(209,83): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(209,61): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(209,39): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(211,83): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(211,61): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(211,39): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(212,83): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(212,61): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(212,39): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(220,22): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(221,22): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(224,24): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(225,24): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
+C:\student\Dz_P\Projekt_zadania\main.cpp(364,26): warning C4305: "+=": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(367,26): warning C4305: "-=": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(370,26): warning C4305: "+=": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(373,26): warning C4305: "-=": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(376,26): warning C4305: "+=": obcięcie z "double" do "GLfloat"
+C:\student\Dz_P\Projekt_zadania\main.cpp(379,26): warning C4305: "-=": obcięcie z "double" do "GLfloat"
+LINK : warning LNK4098: domyślna biblioteka "MSVCRT" powoduje konflikt z innymi bibliotekami; użyj opcji /NODEFAULTLIB:biblioteka
+  Projekt_zadania.vcxproj -> C:\student\Dz_P\Projekt_zadania\x64\Debug\Projekt_zadania.exe
